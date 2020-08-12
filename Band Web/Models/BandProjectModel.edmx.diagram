@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="24c5b9e9819745fcb2dd7dcac80a72c2" Name="Diagram1" ZoomLevel="85">
+        <EntityTypeShape EntityType="BandProjectModel.tBandFormat" Width="1.5" PointX="7.75" PointY="10.75" />
+        <EntityTypeShape EntityType="BandProjectModel.tDestination" Width="1.5" PointX="5.25" PointY="3.625" />
+        <EntityTypeShape EntityType="BandProjectModel.tMember" Width="1.5" PointX="10" PointY="10.5" />
+        <EntityTypeShape EntityType="BandProjectModel.tOrder" Width="1.5" PointX="5.25" PointY="6.625" />
+        <EntityTypeShape EntityType="BandProjectModel.tOrderDetail" Width="1.5" PointX="7.5" PointY="6.25" />
+        <EntityTypeShape EntityType="BandProjectModel.tProduct" Width="1.5" PointX="3" PointY="6.625" />
+        <EntityTypeShape EntityType="BandProjectModel.tProductDetail" Width="1.5" PointX="5.25" PointY="9.875" />
+        <EntityTypeShape EntityType="BandProjectModel.tProductType" Width="1.5" PointX="0.75" PointY="6.875" />
+        <EntityTypeShape EntityType="BandProjectModel.tShipStatus" Width="1.5" PointX="5.25" PointY="13.25" />
+        <EntityTypeShape EntityType="BandProjectModel.tTicketDetail" Width="1.5" PointX="7.75" PointY="0.75" />
+        <EntityTypeShape EntityType="BandProjectModel.tTicketPurchase" Width="1.5" PointX="5.25" PointY="0.75" />
+        <EntityTypeShape EntityType="BandProjectModel.tUser" Width="1.5" PointX="3.125" PointY="0.75" />
+        <AssociationConnector Association="BandProjectModel.FK_tMember_tBandFormat" />
+        <AssociationConnector Association="BandProjectModel.FK_tOrderDetail_tDestination" />
+        <AssociationConnector Association="BandProjectModel.FK_tOrder_tProduct" />
+        <AssociationConnector Association="BandProjectModel.FK_tOrder_tUser" />
+        <AssociationConnector Association="BandProjectModel.FK_tOrderDetail_tOrder" />
+        <AssociationConnector Association="BandProjectModel.FK_tOrderDetail_tShipStatus" />
+        <AssociationConnector Association="BandProjectModel.FK_tProduct_tProductType" />
+        <AssociationConnector Association="BandProjectModel.FK_tProductDetail_tProduct" />
+        <AssociationConnector Association="BandProjectModel.FK_tTicketPurchase_tTicketDetail" />
+        <AssociationConnector Association="BandProjectModel.FK_tTicketPurchase_tTicketPurchase" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

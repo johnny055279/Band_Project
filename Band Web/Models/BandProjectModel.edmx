@@ -1,0 +1,784 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="BandProjectModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="tBandFormat">
+          <Key>
+            <PropertyRef Name="BandFormatID" />
+          </Key>
+          <Property Name="BandFormatID" Type="tinyint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="BandFormatName" Type="nchar" MaxLength="10" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tDestination">
+          <Key>
+            <PropertyRef Name="DestinationId" />
+          </Key>
+          <Property Name="DestinationId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DestinationArea" Type="nchar" MaxLength="10" Nullable="false" />
+          <Property Name="DestinationCountry" Type="nchar" MaxLength="20" Nullable="false" />
+          <Property Name="LastEditdate" Type="date" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tMember">
+          <Key>
+            <PropertyRef Name="MemberID" />
+          </Key>
+          <Property Name="MemberID" Type="tinyint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MemberName" Type="nchar" MaxLength="20" Nullable="false" />
+          <Property Name="MemberPicture" Type="varbinary(max)" Nullable="false" />
+          <Property Name="BandFormatID" Type="tinyint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tOrder">
+          <Key>
+            <PropertyRef Name="OrderId" />
+          </Key>
+          <Property Name="OrderId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="ProductId" Type="int" Nullable="false" />
+          <Property Name="ProductQuality" Type="int" Nullable="false" />
+          <Property Name="LastEditDate" Type="date" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tOrderDetail">
+          <Key>
+            <PropertyRef Name="OrderDetailId" />
+          </Key>
+          <Property Name="OrderDetailId" Type="int" Nullable="false" />
+          <Property Name="OrderId" Type="int" Nullable="false" />
+          <Property Name="DestinationId" Type="int" Nullable="false" />
+          <Property Name="TotalPrice" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="OrderDate" Type="date" Nullable="false" />
+          <Property Name="ArrivalDate" Type="date" Nullable="false" />
+          <Property Name="ShipStatusId" Type="tinyint" Nullable="false" />
+          <Property Name="LastEditDate" Type="date" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tProduct">
+          <Key>
+            <PropertyRef Name="ProductId" />
+          </Key>
+          <Property Name="ProductId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ProductTypeId" Type="tinyint" Nullable="false" />
+          <Property Name="ProductName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="LastEditDate" Type="date" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tProductDetail">
+          <Key>
+            <PropertyRef Name="ProductDetailId" />
+          </Key>
+          <Property Name="ProductDetailId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ProductId" Type="int" Nullable="false" />
+          <Property Name="ProductInStore" Type="int" Nullable="false" />
+          <Property Name="ProductUnitPrice" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="ProductImage" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="LastEditDate" Type="date" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tProductType">
+          <Key>
+            <PropertyRef Name="ProductTypeId" />
+          </Key>
+          <Property Name="ProductTypeId" Type="tinyint" Nullable="false" />
+          <Property Name="ProductType" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="LastEditDate" Type="date" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tShipStatus">
+          <Key>
+            <PropertyRef Name="ShipStatusId" />
+          </Key>
+          <Property Name="ShipStatusId" Type="tinyint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ShipStatus" Type="nchar" MaxLength="10" Nullable="false" />
+          <Property Name="LastEditDate" Type="date" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tTicketDetail">
+          <Key>
+            <PropertyRef Name="TicketDetailId" />
+          </Key>
+          <Property Name="TicketDetailId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TicketDate" Type="date" Nullable="false" />
+          <Property Name="TicketPrice" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="TicketUnitInStore" Type="int" Nullable="false" />
+          <Property Name="TicketLocation" Type="nchar" MaxLength="20" Nullable="false" />
+          <Property Name="TicketVenue" Type="nchar" MaxLength="20" Nullable="false" />
+          <Property Name="TicketStatus" Type="bit" Nullable="false" />
+          <Property Name="LastEditDate" Type="date" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tTicketPurchase">
+          <Key>
+            <PropertyRef Name="TicketPurchaseId" />
+          </Key>
+          <Property Name="TicketPurchaseId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="TicketDetailId" Type="int" Nullable="false" />
+          <Property Name="Quantity" Type="tinyint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tUser">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserAccount" Type="nchar" MaxLength="30" Nullable="false" />
+          <Property Name="UserPassword" Type="varbinary(max)" Nullable="false" />
+          <Property Name="UserEmail" Type="nchar" MaxLength="50" Nullable="false" />
+          <Property Name="UserSexual" Type="nchar" MaxLength="6" Nullable="false" />
+          <Property Name="UserBirthday" Type="date" Nullable="false" />
+          <Property Name="UserAddress" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="UserPhone" Type="nchar" MaxLength="20" Nullable="false" />
+          <Property Name="UserCountry" Type="nchar" MaxLength="20" Nullable="false" />
+          <Property Name="LastEditDate" Type="date" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_tMember_tBandFormat">
+          <End Role="tBandFormat" Type="Self.tBandFormat" Multiplicity="1" />
+          <End Role="tMember" Type="Self.tMember" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tBandFormat">
+              <PropertyRef Name="BandFormatID" />
+            </Principal>
+            <Dependent Role="tMember">
+              <PropertyRef Name="BandFormatID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tOrder_tProduct">
+          <End Role="tProduct" Type="Self.tProduct" Multiplicity="1" />
+          <End Role="tOrder" Type="Self.tOrder" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tProduct">
+              <PropertyRef Name="ProductId" />
+            </Principal>
+            <Dependent Role="tOrder">
+              <PropertyRef Name="ProductId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tOrder_tUser">
+          <End Role="tUser" Type="Self.tUser" Multiplicity="1" />
+          <End Role="tOrder" Type="Self.tOrder" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tUser">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="tOrder">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tOrderDetail_tDestination">
+          <End Role="tDestination" Type="Self.tDestination" Multiplicity="1" />
+          <End Role="tOrderDetail" Type="Self.tOrderDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tDestination">
+              <PropertyRef Name="DestinationId" />
+            </Principal>
+            <Dependent Role="tOrderDetail">
+              <PropertyRef Name="DestinationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tOrderDetail_tOrder">
+          <End Role="tOrder" Type="Self.tOrder" Multiplicity="1" />
+          <End Role="tOrderDetail" Type="Self.tOrderDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tOrder">
+              <PropertyRef Name="OrderId" />
+            </Principal>
+            <Dependent Role="tOrderDetail">
+              <PropertyRef Name="OrderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tOrderDetail_tShipStatus">
+          <End Role="tShipStatus" Type="Self.tShipStatus" Multiplicity="1" />
+          <End Role="tOrderDetail" Type="Self.tOrderDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tShipStatus">
+              <PropertyRef Name="ShipStatusId" />
+            </Principal>
+            <Dependent Role="tOrderDetail">
+              <PropertyRef Name="ShipStatusId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tProduct_tProductType">
+          <End Role="tProductType" Type="Self.tProductType" Multiplicity="1" />
+          <End Role="tProduct" Type="Self.tProduct" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tProductType">
+              <PropertyRef Name="ProductTypeId" />
+            </Principal>
+            <Dependent Role="tProduct">
+              <PropertyRef Name="ProductTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tProductDetail_tProduct">
+          <End Role="tProduct" Type="Self.tProduct" Multiplicity="1" />
+          <End Role="tProductDetail" Type="Self.tProductDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tProduct">
+              <PropertyRef Name="ProductId" />
+            </Principal>
+            <Dependent Role="tProductDetail">
+              <PropertyRef Name="ProductId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tTicketPurchase_tTicketDetail">
+          <End Role="tTicketDetail" Type="Self.tTicketDetail" Multiplicity="1" />
+          <End Role="tTicketPurchase" Type="Self.tTicketPurchase" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tTicketDetail">
+              <PropertyRef Name="TicketDetailId" />
+            </Principal>
+            <Dependent Role="tTicketPurchase">
+              <PropertyRef Name="TicketDetailId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tTicketPurchase_tUser">
+          <End Role="tUser" Type="Self.tUser" Multiplicity="1" />
+          <End Role="tTicketPurchase" Type="Self.tTicketPurchase" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tUser">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="tTicketPurchase">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="BandProjectModelStoreContainer">
+          <EntitySet Name="tBandFormat" EntityType="Self.tBandFormat" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tDestination" EntityType="Self.tDestination" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tMember" EntityType="Self.tMember" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tOrder" EntityType="Self.tOrder" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tOrderDetail" EntityType="Self.tOrderDetail" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tProduct" EntityType="Self.tProduct" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tProductDetail" EntityType="Self.tProductDetail" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tProductType" EntityType="Self.tProductType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tShipStatus" EntityType="Self.tShipStatus" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tTicketDetail" EntityType="Self.tTicketDetail" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tTicketPurchase" EntityType="Self.tTicketPurchase" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tUser" EntityType="Self.tUser" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_tMember_tBandFormat" Association="Self.FK_tMember_tBandFormat">
+            <End Role="tBandFormat" EntitySet="tBandFormat" />
+            <End Role="tMember" EntitySet="tMember" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tOrder_tProduct" Association="Self.FK_tOrder_tProduct">
+            <End Role="tProduct" EntitySet="tProduct" />
+            <End Role="tOrder" EntitySet="tOrder" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tOrder_tUser" Association="Self.FK_tOrder_tUser">
+            <End Role="tUser" EntitySet="tUser" />
+            <End Role="tOrder" EntitySet="tOrder" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tOrderDetail_tDestination" Association="Self.FK_tOrderDetail_tDestination">
+            <End Role="tDestination" EntitySet="tDestination" />
+            <End Role="tOrderDetail" EntitySet="tOrderDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tOrderDetail_tOrder" Association="Self.FK_tOrderDetail_tOrder">
+            <End Role="tOrder" EntitySet="tOrder" />
+            <End Role="tOrderDetail" EntitySet="tOrderDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tOrderDetail_tShipStatus" Association="Self.FK_tOrderDetail_tShipStatus">
+            <End Role="tShipStatus" EntitySet="tShipStatus" />
+            <End Role="tOrderDetail" EntitySet="tOrderDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tProduct_tProductType" Association="Self.FK_tProduct_tProductType">
+            <End Role="tProductType" EntitySet="tProductType" />
+            <End Role="tProduct" EntitySet="tProduct" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tProductDetail_tProduct" Association="Self.FK_tProductDetail_tProduct">
+            <End Role="tProduct" EntitySet="tProduct" />
+            <End Role="tProductDetail" EntitySet="tProductDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tTicketPurchase_tTicketDetail" Association="Self.FK_tTicketPurchase_tTicketDetail">
+            <End Role="tTicketDetail" EntitySet="tTicketDetail" />
+            <End Role="tTicketPurchase" EntitySet="tTicketPurchase" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tTicketPurchase_tUser" Association="Self.FK_tTicketPurchase_tUser">
+            <End Role="tUser" EntitySet="tUser" />
+            <End Role="tTicketPurchase" EntitySet="tTicketPurchase" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="BandProjectModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="BandProjectEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="tBandFormat" EntityType="BandProjectModel.tBandFormat" />
+          <EntitySet Name="tDestination" EntityType="BandProjectModel.tDestination" />
+          <EntitySet Name="tMember" EntityType="BandProjectModel.tMember" />
+          <EntitySet Name="tOrder" EntityType="BandProjectModel.tOrder" />
+          <EntitySet Name="tOrderDetail" EntityType="BandProjectModel.tOrderDetail" />
+          <EntitySet Name="tProduct" EntityType="BandProjectModel.tProduct" />
+          <EntitySet Name="tProductDetail" EntityType="BandProjectModel.tProductDetail" />
+          <EntitySet Name="tProductType" EntityType="BandProjectModel.tProductType" />
+          <EntitySet Name="tShipStatus" EntityType="BandProjectModel.tShipStatus" />
+          <EntitySet Name="tTicketDetail" EntityType="BandProjectModel.tTicketDetail" />
+          <EntitySet Name="tTicketPurchase" EntityType="BandProjectModel.tTicketPurchase" />
+          <EntitySet Name="tUser" EntityType="BandProjectModel.tUser" />
+          <AssociationSet Name="FK_tMember_tBandFormat" Association="BandProjectModel.FK_tMember_tBandFormat">
+            <End Role="tBandFormat" EntitySet="tBandFormat" />
+            <End Role="tMember" EntitySet="tMember" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tOrderDetail_tDestination" Association="BandProjectModel.FK_tOrderDetail_tDestination">
+            <End Role="tDestination" EntitySet="tDestination" />
+            <End Role="tOrderDetail" EntitySet="tOrderDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tOrder_tProduct" Association="BandProjectModel.FK_tOrder_tProduct">
+            <End Role="tProduct" EntitySet="tProduct" />
+            <End Role="tOrder" EntitySet="tOrder" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tOrder_tUser" Association="BandProjectModel.FK_tOrder_tUser">
+            <End Role="tUser" EntitySet="tUser" />
+            <End Role="tOrder" EntitySet="tOrder" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tOrderDetail_tOrder" Association="BandProjectModel.FK_tOrderDetail_tOrder">
+            <End Role="tOrder" EntitySet="tOrder" />
+            <End Role="tOrderDetail" EntitySet="tOrderDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tOrderDetail_tShipStatus" Association="BandProjectModel.FK_tOrderDetail_tShipStatus">
+            <End Role="tShipStatus" EntitySet="tShipStatus" />
+            <End Role="tOrderDetail" EntitySet="tOrderDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tProduct_tProductType" Association="BandProjectModel.FK_tProduct_tProductType">
+            <End Role="tProductType" EntitySet="tProductType" />
+            <End Role="tProduct" EntitySet="tProduct" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tProductDetail_tProduct" Association="BandProjectModel.FK_tProductDetail_tProduct">
+            <End Role="tProduct" EntitySet="tProduct" />
+            <End Role="tProductDetail" EntitySet="tProductDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tTicketPurchase_tTicketDetail" Association="BandProjectModel.FK_tTicketPurchase_tTicketDetail">
+            <End Role="tTicketDetail" EntitySet="tTicketDetail" />
+            <End Role="tTicketPurchase" EntitySet="tTicketPurchase" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tTicketPurchase_tTicketPurchase" Association="BandProjectModel.FK_tTicketPurchase_tTicketPurchase">
+            <End Role="tUser" EntitySet="tUser" />
+            <End Role="tTicketPurchase" EntitySet="tTicketPurchase" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="tBandFormat">
+          <Key>
+            <PropertyRef Name="BandFormatID" />
+          </Key>
+          <Property Name="BandFormatID" Type="Byte" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="BandFormatName" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="tMember" Relationship="BandProjectModel.FK_tMember_tBandFormat" FromRole="tBandFormat" ToRole="tMember" />
+        </EntityType>
+        <EntityType Name="tDestination">
+          <Key>
+            <PropertyRef Name="DestinationId" />
+          </Key>
+          <Property Name="DestinationId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DestinationArea" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="DestinationCountry" Type="String" Nullable="false" MaxLength="20" FixedLength="true" Unicode="true" />
+          <Property Name="LastEditdate" Type="DateTime" Nullable="false" Precision="0" />
+          <NavigationProperty Name="tOrderDetail" Relationship="BandProjectModel.FK_tOrderDetail_tDestination" FromRole="tDestination" ToRole="tOrderDetail" />
+        </EntityType>
+        <EntityType Name="tMember">
+          <Key>
+            <PropertyRef Name="MemberID" />
+          </Key>
+          <Property Name="MemberID" Type="Byte" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MemberName" Type="String" Nullable="false" MaxLength="20" FixedLength="true" Unicode="true" />
+          <Property Name="MemberPicture" Type="Binary" Nullable="false" MaxLength="Max" FixedLength="false" />
+          <Property Name="BandFormatID" Type="Byte" Nullable="false" />
+          <NavigationProperty Name="tBandFormat" Relationship="BandProjectModel.FK_tMember_tBandFormat" FromRole="tMember" ToRole="tBandFormat" />
+        </EntityType>
+        <EntityType Name="tOrder">
+          <Key>
+            <PropertyRef Name="OrderId" />
+          </Key>
+          <Property Name="OrderId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="ProductId" Type="Int32" Nullable="false" />
+          <Property Name="ProductQuality" Type="Int32" Nullable="false" />
+          <Property Name="LastEditDate" Type="DateTime" Nullable="false" Precision="0" />
+          <NavigationProperty Name="tProduct" Relationship="BandProjectModel.FK_tOrder_tProduct" FromRole="tOrder" ToRole="tProduct" />
+          <NavigationProperty Name="tUser" Relationship="BandProjectModel.FK_tOrder_tUser" FromRole="tOrder" ToRole="tUser" />
+          <NavigationProperty Name="tOrderDetail" Relationship="BandProjectModel.FK_tOrderDetail_tOrder" FromRole="tOrder" ToRole="tOrderDetail" />
+        </EntityType>
+        <EntityType Name="tOrderDetail">
+          <Key>
+            <PropertyRef Name="OrderDetailId" />
+          </Key>
+          <Property Name="OrderDetailId" Type="Int32" Nullable="false" />
+          <Property Name="OrderId" Type="Int32" Nullable="false" />
+          <Property Name="DestinationId" Type="Int32" Nullable="false" />
+          <Property Name="TotalPrice" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="OrderDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="ArrivalDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="ShipStatusId" Type="Byte" Nullable="false" />
+          <Property Name="LastEditDate" Type="DateTime" Nullable="false" Precision="0" />
+          <NavigationProperty Name="tDestination" Relationship="BandProjectModel.FK_tOrderDetail_tDestination" FromRole="tOrderDetail" ToRole="tDestination" />
+          <NavigationProperty Name="tOrder" Relationship="BandProjectModel.FK_tOrderDetail_tOrder" FromRole="tOrderDetail" ToRole="tOrder" />
+          <NavigationProperty Name="tShipStatus" Relationship="BandProjectModel.FK_tOrderDetail_tShipStatus" FromRole="tOrderDetail" ToRole="tShipStatus" />
+        </EntityType>
+        <EntityType Name="tProduct">
+          <Key>
+            <PropertyRef Name="ProductId" />
+          </Key>
+          <Property Name="ProductId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ProductTypeId" Type="Byte" Nullable="false" />
+          <Property Name="ProductName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="LastEditDate" Type="DateTime" Nullable="false" Precision="0" />
+          <NavigationProperty Name="tOrder" Relationship="BandProjectModel.FK_tOrder_tProduct" FromRole="tProduct" ToRole="tOrder" />
+          <NavigationProperty Name="tProductType" Relationship="BandProjectModel.FK_tProduct_tProductType" FromRole="tProduct" ToRole="tProductType" />
+          <NavigationProperty Name="tProductDetail" Relationship="BandProjectModel.FK_tProductDetail_tProduct" FromRole="tProduct" ToRole="tProductDetail" />
+        </EntityType>
+        <EntityType Name="tProductDetail">
+          <Key>
+            <PropertyRef Name="ProductDetailId" />
+          </Key>
+          <Property Name="ProductDetailId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ProductId" Type="Int32" Nullable="false" />
+          <Property Name="ProductInStore" Type="Int32" Nullable="false" />
+          <Property Name="ProductUnitPrice" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="ProductImage" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="LastEditDate" Type="DateTime" Nullable="false" Precision="0" />
+          <NavigationProperty Name="tProduct" Relationship="BandProjectModel.FK_tProductDetail_tProduct" FromRole="tProductDetail" ToRole="tProduct" />
+        </EntityType>
+        <EntityType Name="tProductType">
+          <Key>
+            <PropertyRef Name="ProductTypeId" />
+          </Key>
+          <Property Name="ProductTypeId" Type="Byte" Nullable="false" />
+          <Property Name="ProductType" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="LastEditDate" Type="DateTime" Nullable="false" Precision="0" />
+          <NavigationProperty Name="tProduct" Relationship="BandProjectModel.FK_tProduct_tProductType" FromRole="tProductType" ToRole="tProduct" />
+        </EntityType>
+        <EntityType Name="tShipStatus">
+          <Key>
+            <PropertyRef Name="ShipStatusId" />
+          </Key>
+          <Property Name="ShipStatusId" Type="Byte" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ShipStatus" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="LastEditDate" Type="DateTime" Nullable="false" Precision="0" />
+          <NavigationProperty Name="tOrderDetail" Relationship="BandProjectModel.FK_tOrderDetail_tShipStatus" FromRole="tShipStatus" ToRole="tOrderDetail" />
+        </EntityType>
+        <EntityType Name="tTicketDetail">
+          <Key>
+            <PropertyRef Name="TicketDetailId" />
+          </Key>
+          <Property Name="TicketDetailId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TicketDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="TicketPrice" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="TicketUnitInStore" Type="Int32" Nullable="false" />
+          <Property Name="TicketLocation" Type="String" Nullable="false" MaxLength="20" FixedLength="true" Unicode="true" />
+          <Property Name="TicketStatus" Type="Boolean" Nullable="false" />
+          <Property Name="LastEditDate" Type="DateTime" Nullable="false" Precision="0" />
+          <NavigationProperty Name="tTicketPurchase" Relationship="BandProjectModel.FK_tTicketPurchase_tTicketDetail" FromRole="tTicketDetail" ToRole="tTicketPurchase" />
+          <Property Name="TicketVenue" Type="String" Nullable="false" MaxLength="20" FixedLength="true" Unicode="true" />
+        </EntityType>
+        <EntityType Name="tTicketPurchase">
+          <Key>
+            <PropertyRef Name="TicketPurchaseId" />
+          </Key>
+          <Property Name="TicketPurchaseId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="TicketDetailId" Type="Int32" Nullable="false" />
+          <Property Name="Quantity" Type="Byte" Nullable="false" />
+          <NavigationProperty Name="tTicketDetail" Relationship="BandProjectModel.FK_tTicketPurchase_tTicketDetail" FromRole="tTicketPurchase" ToRole="tTicketDetail" />
+          <NavigationProperty Name="tUser" Relationship="BandProjectModel.FK_tTicketPurchase_tTicketPurchase" FromRole="tTicketPurchase" ToRole="tUser" />
+        </EntityType>
+        <EntityType Name="tUser">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserAccount" Type="String" Nullable="false" MaxLength="30" FixedLength="true" Unicode="true" />
+          <Property Name="UserPassword" Type="Binary" Nullable="false" MaxLength="Max" FixedLength="false" />
+          <Property Name="UserEmail" Type="String" Nullable="false" MaxLength="50" FixedLength="true" Unicode="true" />
+          <Property Name="UserSexual" Type="String" Nullable="false" MaxLength="6" FixedLength="true" Unicode="true" />
+          <Property Name="UserBirthday" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="UserAddress" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="UserPhone" Type="String" Nullable="false" MaxLength="20" FixedLength="true" Unicode="true" />
+          <Property Name="UserCountry" Type="String" Nullable="false" MaxLength="20" FixedLength="true" Unicode="true" />
+          <Property Name="LastEditDate" Type="DateTime" Nullable="false" Precision="0" />
+          <NavigationProperty Name="tOrder" Relationship="BandProjectModel.FK_tOrder_tUser" FromRole="tUser" ToRole="tOrder" />
+          <NavigationProperty Name="tTicketPurchase" Relationship="BandProjectModel.FK_tTicketPurchase_tTicketPurchase" FromRole="tUser" ToRole="tTicketPurchase" />
+        </EntityType>
+        <Association Name="FK_tMember_tBandFormat">
+          <End Type="BandProjectModel.tBandFormat" Role="tBandFormat" Multiplicity="1" />
+          <End Type="BandProjectModel.tMember" Role="tMember" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tBandFormat">
+              <PropertyRef Name="BandFormatID" />
+            </Principal>
+            <Dependent Role="tMember">
+              <PropertyRef Name="BandFormatID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tOrderDetail_tDestination">
+          <End Type="BandProjectModel.tDestination" Role="tDestination" Multiplicity="1" />
+          <End Type="BandProjectModel.tOrderDetail" Role="tOrderDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tDestination">
+              <PropertyRef Name="DestinationId" />
+            </Principal>
+            <Dependent Role="tOrderDetail">
+              <PropertyRef Name="DestinationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tOrder_tProduct">
+          <End Type="BandProjectModel.tProduct" Role="tProduct" Multiplicity="1" />
+          <End Type="BandProjectModel.tOrder" Role="tOrder" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tProduct">
+              <PropertyRef Name="ProductId" />
+            </Principal>
+            <Dependent Role="tOrder">
+              <PropertyRef Name="ProductId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tOrder_tUser">
+          <End Type="BandProjectModel.tUser" Role="tUser" Multiplicity="1" />
+          <End Type="BandProjectModel.tOrder" Role="tOrder" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tUser">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="tOrder">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tOrderDetail_tOrder">
+          <End Type="BandProjectModel.tOrder" Role="tOrder" Multiplicity="1" />
+          <End Type="BandProjectModel.tOrderDetail" Role="tOrderDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tOrder">
+              <PropertyRef Name="OrderId" />
+            </Principal>
+            <Dependent Role="tOrderDetail">
+              <PropertyRef Name="OrderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tOrderDetail_tShipStatus">
+          <End Type="BandProjectModel.tShipStatus" Role="tShipStatus" Multiplicity="1" />
+          <End Type="BandProjectModel.tOrderDetail" Role="tOrderDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tShipStatus">
+              <PropertyRef Name="ShipStatusId" />
+            </Principal>
+            <Dependent Role="tOrderDetail">
+              <PropertyRef Name="ShipStatusId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tProduct_tProductType">
+          <End Type="BandProjectModel.tProductType" Role="tProductType" Multiplicity="1" />
+          <End Type="BandProjectModel.tProduct" Role="tProduct" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tProductType">
+              <PropertyRef Name="ProductTypeId" />
+            </Principal>
+            <Dependent Role="tProduct">
+              <PropertyRef Name="ProductTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tProductDetail_tProduct">
+          <End Type="BandProjectModel.tProduct" Role="tProduct" Multiplicity="1" />
+          <End Type="BandProjectModel.tProductDetail" Role="tProductDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tProduct">
+              <PropertyRef Name="ProductId" />
+            </Principal>
+            <Dependent Role="tProductDetail">
+              <PropertyRef Name="ProductId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tTicketPurchase_tTicketDetail">
+          <End Type="BandProjectModel.tTicketDetail" Role="tTicketDetail" Multiplicity="1" />
+          <End Type="BandProjectModel.tTicketPurchase" Role="tTicketPurchase" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tTicketDetail">
+              <PropertyRef Name="TicketDetailId" />
+            </Principal>
+            <Dependent Role="tTicketPurchase">
+              <PropertyRef Name="TicketDetailId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tTicketPurchase_tTicketPurchase">
+          <End Type="BandProjectModel.tUser" Role="tUser" Multiplicity="1" />
+          <End Type="BandProjectModel.tTicketPurchase" Role="tTicketPurchase" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tUser">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="tTicketPurchase">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="BandProjectModelStoreContainer" CdmEntityContainer="BandProjectEntities">
+          <EntitySetMapping Name="tBandFormat">
+            <EntityTypeMapping TypeName="BandProjectModel.tBandFormat">
+              <MappingFragment StoreEntitySet="tBandFormat">
+                <ScalarProperty Name="BandFormatName" ColumnName="BandFormatName" />
+                <ScalarProperty Name="BandFormatID" ColumnName="BandFormatID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tDestination">
+            <EntityTypeMapping TypeName="BandProjectModel.tDestination">
+              <MappingFragment StoreEntitySet="tDestination">
+                <ScalarProperty Name="LastEditdate" ColumnName="LastEditdate" />
+                <ScalarProperty Name="DestinationCountry" ColumnName="DestinationCountry" />
+                <ScalarProperty Name="DestinationArea" ColumnName="DestinationArea" />
+                <ScalarProperty Name="DestinationId" ColumnName="DestinationId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tMember">
+            <EntityTypeMapping TypeName="BandProjectModel.tMember">
+              <MappingFragment StoreEntitySet="tMember">
+                <ScalarProperty Name="BandFormatID" ColumnName="BandFormatID" />
+                <ScalarProperty Name="MemberPicture" ColumnName="MemberPicture" />
+                <ScalarProperty Name="MemberName" ColumnName="MemberName" />
+                <ScalarProperty Name="MemberID" ColumnName="MemberID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tOrder">
+            <EntityTypeMapping TypeName="BandProjectModel.tOrder">
+              <MappingFragment StoreEntitySet="tOrder">
+                <ScalarProperty Name="LastEditDate" ColumnName="LastEditDate" />
+                <ScalarProperty Name="ProductQuality" ColumnName="ProductQuality" />
+                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="OrderId" ColumnName="OrderId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tOrderDetail">
+            <EntityTypeMapping TypeName="BandProjectModel.tOrderDetail">
+              <MappingFragment StoreEntitySet="tOrderDetail">
+                <ScalarProperty Name="LastEditDate" ColumnName="LastEditDate" />
+                <ScalarProperty Name="ShipStatusId" ColumnName="ShipStatusId" />
+                <ScalarProperty Name="ArrivalDate" ColumnName="ArrivalDate" />
+                <ScalarProperty Name="OrderDate" ColumnName="OrderDate" />
+                <ScalarProperty Name="TotalPrice" ColumnName="TotalPrice" />
+                <ScalarProperty Name="DestinationId" ColumnName="DestinationId" />
+                <ScalarProperty Name="OrderId" ColumnName="OrderId" />
+                <ScalarProperty Name="OrderDetailId" ColumnName="OrderDetailId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tProduct">
+            <EntityTypeMapping TypeName="BandProjectModel.tProduct">
+              <MappingFragment StoreEntitySet="tProduct">
+                <ScalarProperty Name="LastEditDate" ColumnName="LastEditDate" />
+                <ScalarProperty Name="ProductName" ColumnName="ProductName" />
+                <ScalarProperty Name="ProductTypeId" ColumnName="ProductTypeId" />
+                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tProductDetail">
+            <EntityTypeMapping TypeName="BandProjectModel.tProductDetail">
+              <MappingFragment StoreEntitySet="tProductDetail">
+                <ScalarProperty Name="LastEditDate" ColumnName="LastEditDate" />
+                <ScalarProperty Name="ProductImage" ColumnName="ProductImage" />
+                <ScalarProperty Name="ProductUnitPrice" ColumnName="ProductUnitPrice" />
+                <ScalarProperty Name="ProductInStore" ColumnName="ProductInStore" />
+                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+                <ScalarProperty Name="ProductDetailId" ColumnName="ProductDetailId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tProductType">
+            <EntityTypeMapping TypeName="BandProjectModel.tProductType">
+              <MappingFragment StoreEntitySet="tProductType">
+                <ScalarProperty Name="LastEditDate" ColumnName="LastEditDate" />
+                <ScalarProperty Name="ProductType" ColumnName="ProductType" />
+                <ScalarProperty Name="ProductTypeId" ColumnName="ProductTypeId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tShipStatus">
+            <EntityTypeMapping TypeName="BandProjectModel.tShipStatus">
+              <MappingFragment StoreEntitySet="tShipStatus">
+                <ScalarProperty Name="LastEditDate" ColumnName="LastEditDate" />
+                <ScalarProperty Name="ShipStatus" ColumnName="ShipStatus" />
+                <ScalarProperty Name="ShipStatusId" ColumnName="ShipStatusId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tTicketDetail">
+            <EntityTypeMapping TypeName="BandProjectModel.tTicketDetail">
+              <MappingFragment StoreEntitySet="tTicketDetail">
+                <ScalarProperty Name="TicketVenue" ColumnName="TicketVenue" />
+                <ScalarProperty Name="LastEditDate" ColumnName="LastEditDate" />
+                <ScalarProperty Name="TicketStatus" ColumnName="TicketStatus" />
+                <ScalarProperty Name="TicketLocation" ColumnName="TicketLocation" />
+                <ScalarProperty Name="TicketUnitInStore" ColumnName="TicketUnitInStore" />
+                <ScalarProperty Name="TicketPrice" ColumnName="TicketPrice" />
+                <ScalarProperty Name="TicketDate" ColumnName="TicketDate" />
+                <ScalarProperty Name="TicketDetailId" ColumnName="TicketDetailId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tTicketPurchase">
+            <EntityTypeMapping TypeName="BandProjectModel.tTicketPurchase">
+              <MappingFragment StoreEntitySet="tTicketPurchase">
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="TicketDetailId" ColumnName="TicketDetailId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="TicketPurchaseId" ColumnName="TicketPurchaseId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tUser">
+            <EntityTypeMapping TypeName="BandProjectModel.tUser">
+              <MappingFragment StoreEntitySet="tUser">
+                <ScalarProperty Name="LastEditDate" ColumnName="LastEditDate" />
+                <ScalarProperty Name="UserCountry" ColumnName="UserCountry" />
+                <ScalarProperty Name="UserPhone" ColumnName="UserPhone" />
+                <ScalarProperty Name="UserAddress" ColumnName="UserAddress" />
+                <ScalarProperty Name="UserBirthday" ColumnName="UserBirthday" />
+                <ScalarProperty Name="UserSexual" ColumnName="UserSexual" />
+                <ScalarProperty Name="UserEmail" ColumnName="UserEmail" />
+                <ScalarProperty Name="UserPassword" ColumnName="UserPassword" />
+                <ScalarProperty Name="UserAccount" ColumnName="UserAccount" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="無" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

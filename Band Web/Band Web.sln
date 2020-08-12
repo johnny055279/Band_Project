@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30114.105
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Band Web", "Band Web.csproj", "{707B5BDF-D934-4BB3-B279-1B97664967DF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Band Web.Tests", "..\Band Web.Tests\Band Web.Tests.csproj", "{97E1A808-FD76-4811-A901-812415A43741}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{707B5BDF-D934-4BB3-B279-1B97664967DF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{707B5BDF-D934-4BB3-B279-1B97664967DF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{707B5BDF-D934-4BB3-B279-1B97664967DF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{707B5BDF-D934-4BB3-B279-1B97664967DF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{97E1A808-FD76-4811-A901-812415A43741}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{97E1A808-FD76-4811-A901-812415A43741}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{97E1A808-FD76-4811-A901-812415A43741}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{97E1A808-FD76-4811-A901-812415A43741}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {CEDD2336-05EE-44D4-92DF-9D444FDD8F5B}
+	EndGlobalSection
+EndGlobal

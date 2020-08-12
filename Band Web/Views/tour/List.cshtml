@@ -1,0 +1,60 @@
+﻿@model IEnumerable<Band_Web.Models.tTicketDetail>
+
+@{
+    ViewBag.Title = "List";
+    Layout = "~/Views/Layout/_Layout.cshtml";
+}
+
+@section Styles{
+    <link rel="stylesheet" href="~/Content/CSS/tour.css" />
+    <link rel="stylesheet" href="~/Content/CSS/sweetalert2.css" />
+}
+
+@section Scripts{
+    <script src="~/Content/Scripts/sweetalert2.all.min.js"></script>
+    <script src="~/Content/Scripts/tour.js"></script>
+}
+
+<div class="container">
+    <h2>GET ON THE LIST!</h2>
+    <p>Get updates from My Chemical Romance</p>
+    <br />
+    <table class="table table-hover table-dark">
+        <tr>
+            <th>DATE</th>
+            <th>VENUE</th>
+            <th>LOCATION</th>
+            <th>INFO</th>
+        </tr>
+        @{
+            if (Model != null)
+            {
+                foreach (var item in Model)
+                {
+                    string Date = item.TicketDate.ToString("yyyy-MM-dd");
+                    <tr>
+                        <td>@Date</td>
+                        <td>@Html.DisplayFor(modelItem => item.TicketLocation)</td>
+                        <td>@Html.DisplayFor(modelItem => item.TicketVenue)</td>
+                        <td class="button">
+                            @{
+                                if (item.TicketStatus == false)
+                                {
+                                    <a class="btn btn-secondary disabled" disabled>SOLD OUT</a>
+                                }
+                                else
+                                {
+                                    <a class="btn btn-secondary">TICKETS</a>
+                                }
+                            }
+                        </td>
+                    </tr>
+                }
+            }
+
+        }
+    </table>
+</div>
+<div class="alert alert-warning" role="alert" style="width:80%; text-align:center; margin:auto">
+    Don't have a account? Why not <a href="#" class="alert-link">JOIN OUR FAMILY</a>! Take some minutes and enjoy our show!
+</div>
