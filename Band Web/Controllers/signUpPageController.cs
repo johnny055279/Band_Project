@@ -16,7 +16,7 @@ namespace Band_Web.Controllers
         }
 
         [HttpPost]
-        public ActionResult SignUp(signUpModel signUpModel)
+        public ActionResult SignUp(string id)
         {
             return RedirectToRoute("");
         }

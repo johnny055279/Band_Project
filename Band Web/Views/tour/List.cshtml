@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Band_Web.Models.tTicketDetail>
+﻿@model IEnumerable<Band_Web.Models.TicketDetailModel>
 
 @{
     ViewBag.Title = "List";
@@ -44,7 +44,7 @@
                                 }
                                 else
                                 {
-                                    <a class="btn btn-secondary">TICKETS</a>
+                                    @Html.ActionLink("TICKETS", "", "", new { Class = "btn btn-secondary" })
                                 }
                             }
                         </td>
@@ -54,7 +54,4 @@
 
         }
     </table>
-</div>
-<div class="alert alert-warning" role="alert" style="width:80%; text-align:center; margin:auto">
-    Don't have a account? Why not <a href="#" class="alert-link">JOIN OUR FAMILY</a>! Take some minutes and enjoy our show!
 </div>
