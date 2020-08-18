@@ -3,94 +3,74 @@
 @{
     ViewBag.Title = "SignUp";
     Layout = "~/Views/Layout/_Layout.cshtml";
+
+    if (TempData["ErrorMsg"] != null)
+    {
+        <script>
+            var message = @Html.Raw(Json.Encode(TempData["ErrorMsg"]))
+            alert(message);
+        </script>
+    }
+    if (TempData["Exception"] != null)
+    {
+        <script>
+            var message = @Html.Raw(Json.Encode(TempData["Exception"]))
+            alert(message);
+        </script>
+    }
+}
+@section Styles{
+    <link rel="stylesheet" href="~/Content/CSS/SignUp.css" />
 }
 
-<h2>Become Our Family To Get More Bonus</h2>
-<div class="container">
-    @using (Html.BeginForm())
-    {
-        @Html.AntiForgeryToken()
+@section Scripts{
+    <script src="~/Content/Scripts/signUp.js"></script>
+}
 
-        <div class="form-horizontal">
-            <h4>tUser</h4>
-            <hr />
-            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-            <div class="form-group">
-                @Html.LabelFor(model => model.UserAccount, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.UserAccount, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.UserAccount, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-            <div class="form-group">
-                @Html.LabelFor(model => model.UserPassword, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.UserPassword, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.UserPassword, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-            <div class="form-group">
-                @Html.LabelFor(model => model.UserEmail, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.UserEmail, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.UserEmail, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-            <div class="form-group">
-                @Html.LabelFor(model => model.UserSexual, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.UserSexual, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.UserSexual, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-            <div class="form-group">
-                @Html.LabelFor(model => model.UserBirthday, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.UserBirthday, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.UserBirthday, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-            <div class="form-group">
-                @Html.LabelFor(model => model.UserAddress, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.UserAddress, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.UserAddress, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-            <div class="form-group">
-                @Html.LabelFor(model => model.UserPhone, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.UserPhone, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.UserPhone, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-            <div class="form-group">
-                @Html.LabelFor(model => model.UserCountry, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.UserCountry, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.UserCountry, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-            <div class="form-group">
-                <div class="col-md-offset-2 col-md-10">
-                    <input type="submit" value="Create" class="btn btn-default" />
-                </div>
-            </div>
+<div class="container" style="width:30%">
+    <form class="form-signin" enctype="multipart/form-data" method="post">
+        <div class="text-center mb-4">
+            <img src="~/Content/Images/logo2.png" alt="" width="72" height="72">
+            <h1 class="h3 mb-3 font-weight-normal">SIGN UP</h1>
         </div>
-    }
-</div>
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
 
-<script src="~/Scripts/jquery-3.4.1.min.js"></script>
-<script src="~/Scripts/jquery.validate.min.js"></script>
-<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+        <div class="form-group">
+            <input type="text" id="inputAccount" class="form-control" name="UserAccount" placeholder="Account" required="" autofocus="" maxlength="30">
+        </div>
+        <div class="form-group">
+            <input type="password" id="inputPassword" class="form-control" name="UserPassword" placeholder="Password" required="">
+        </div>
+        <div class="form-group">
+            <input type="email" id="inputEmail" class="form-control" name="UserEmail" placeholder="Email address" required="" maxlength="50">
+        </div>
+        <div class="form-group">
+            <select type="text" id="inputSexual" class="form-control" name="UserSexual" required="">
+                <option selected disabled hidden>Gender</option>
+                <option>Male</option>
+                <option>Female</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <input type="date" id="inputBirthday" class="form-control" name="UserBirthday" max="@DateTime.Now.ToString("yyyy-MM-dd")" required="">
+        </div>
+        <div class="form-group">
+            <select type="text" id="inputCountry" class="form-control" name="UserCountry" required="">
+                <option hidden disabled selected>Choose Your Country</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <input type="text" id="inputAddress" class="form-control" name="UserAddress" required="" placeholder="Address" maxlength="50">
+        </div>
+        <div class="form-group">
+            <input type="tel" id="inputPhone" class="form-control" name="UserPhone" required="" placeholder="Phone" maxlength="20">
+        </div>
+
+        <div class="checkbox mb-3">
+            <label>
+                <input type="checkbox" value="remember-me"> Remember me
+            </label>
+        </div>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+        <p class="mt-5 mb-3 text-muted text-center">© 2017-2020</p>
+    </form>
+</div>

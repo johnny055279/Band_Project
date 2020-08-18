@@ -121,9 +121,10 @@
           <Property Name="UserEmail" Type="nchar" MaxLength="50" Nullable="false" />
           <Property Name="UserSexual" Type="nchar" MaxLength="6" Nullable="false" />
           <Property Name="UserBirthday" Type="date" Nullable="false" />
-          <Property Name="UserAddress" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="UserPhone" Type="nchar" MaxLength="20" Nullable="false" />
-          <Property Name="UserCountry" Type="nchar" MaxLength="20" Nullable="false" />
+          <Property Name="UserCountry" Type="nchar" MaxLength="50" Nullable="false" />
+          <Property Name="UserAddress" Type="nchar" MaxLength="50" />
+          <Property Name="UserPhone" Type="nchar" MaxLength="20" />
+          <Property Name="UserSalt" Type="varbinary(max)" Nullable="false" />
           <Property Name="LastEditDate" Type="date" Nullable="false" />
         </EntityType>
         <Association Name="FK_tMember_tBandFormat">
@@ -492,12 +493,13 @@
           <Property Name="UserEmail" Type="String" Nullable="false" MaxLength="50" FixedLength="true" Unicode="true" />
           <Property Name="UserSexual" Type="String" Nullable="false" MaxLength="6" FixedLength="true" Unicode="true" />
           <Property Name="UserBirthday" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="UserAddress" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="UserPhone" Type="String" Nullable="false" MaxLength="20" FixedLength="true" Unicode="true" />
-          <Property Name="UserCountry" Type="String" Nullable="false" MaxLength="20" FixedLength="true" Unicode="true" />
+          <Property Name="UserAddress" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+          <Property Name="UserPhone" Type="String" MaxLength="20" FixedLength="true" Unicode="true" />
+          <Property Name="UserCountry" Type="String" Nullable="false" MaxLength="50" FixedLength="true" Unicode="true" />
           <Property Name="LastEditDate" Type="DateTime" Nullable="false" Precision="0" />
           <NavigationProperty Name="tOrder" Relationship="BandProjectModel.FK_tOrder_tUser" FromRole="tUser" ToRole="tOrder" />
           <NavigationProperty Name="tTicketPurchase" Relationship="BandProjectModel.FK_tTicketPurchase_tTicketPurchase" FromRole="tUser" ToRole="tTicketPurchase" />
+          <Property Name="UserSalt" Type="Binary" Nullable="false" MaxLength="Max" FixedLength="false" />
         </EntityType>
         <Association Name="FK_tMember_tBandFormat">
           <End Type="BandProjectModel.tBandFormat" Role="tBandFormat" Multiplicity="1" />
@@ -745,6 +747,7 @@
           <EntitySetMapping Name="tUser">
             <EntityTypeMapping TypeName="BandProjectModel.tUser">
               <MappingFragment StoreEntitySet="tUser">
+                <ScalarProperty Name="UserSalt" ColumnName="UserSalt" />
                 <ScalarProperty Name="LastEditDate" ColumnName="LastEditDate" />
                 <ScalarProperty Name="UserCountry" ColumnName="UserCountry" />
                 <ScalarProperty Name="UserPhone" ColumnName="UserPhone" />

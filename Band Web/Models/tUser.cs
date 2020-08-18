@@ -31,6 +31,7 @@ namespace Band_Web.Models
         public string UserPhone { get; set; }
         public string UserCountry { get; set; }
         public System.DateTime LastEditDate { get; set; }
+        public byte[] UserSalt { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<tOrder> tOrder { get; set; }

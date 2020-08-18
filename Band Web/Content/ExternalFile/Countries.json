@@ -460,11 +460,11 @@
     "code": "KI"
   },
   {
-    "name": "Korea, Democratic People'S Republic of",
+    "name": "North of Korea",
     "code": "KP"
   },
   {
-    "name": "Korea, Republic of",
+    "name": "South of Korea",
     "code": "KR"
   },
   {
@@ -476,7 +476,7 @@
     "code": "KG"
   },
   {
-    "name": "Lao People'S Democratic Republic",
+    "name": "Lao",
     "code": "LA"
   },
   {
@@ -516,7 +516,7 @@
     "code": "MO"
   },
   {
-    "name": "Macedonia, The Former Yugoslav Republic of",
+    "name": "Macedonia",
     "code": "MK"
   },
   {
@@ -568,11 +568,11 @@
     "code": "MX"
   },
   {
-    "name": "Micronesia, Federated States of",
+    "name": "Micronesia",
     "code": "FM"
   },
   {
-    "name": "Moldova, Republic of",
+    "name": "Moldova",
     "code": "MD"
   },
   {

@@ -111,15 +111,18 @@
   <ItemGroup>
     <Content Include="Content\CSS\bootstrap.min.css" />
     <Content Include="Content\CSS\homepage.css" />
+    <Content Include="Content\CSS\SignUp.css" />
     <Content Include="Content\CSS\sweetalert2.css" />
     <Content Include="Content\CSS\tour.css" />
     <Content Include="Content\CSS\_Layout.css" />
     <Content Include="Content\Images\233483.png" />
     <Content Include="Content\Images\danger.png" />
     <Content Include="Content\Images\logo.png" />
+    <Content Include="Content\Images\logo2.png" />
     <Content Include="Content\Images\main.png" />
     <Content Include="Content\Scripts\bootstrap.min.js" />
     <Content Include="Content\Scripts\jquery-3.5.1.min.js" />
+    <Content Include="Content\Scripts\signUp.js" />
     <Content Include="Content\Scripts\sweetalert2.all.min.js" />
     <Content Include="Content\Scripts\tour.js" />
     <Content Include="Global.asax" />
@@ -233,6 +236,12 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ClassLibrary\ClassLibrary.csproj">
+      <Project>{4b4ccbe8-a6db-41c4-b47a-2e092f802ee2}</Project>
+      <Name>ClassLibrary</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
