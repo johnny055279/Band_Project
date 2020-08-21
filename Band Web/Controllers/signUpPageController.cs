@@ -20,7 +20,6 @@ namespace Band_Web.Controllers
         public ActionResult SignUp(SignUpModel signUpModel)
         {
             int returnResult;
-
             try
             {
                 using (IDbConnection db = new SqlConnection(ConfigurationManager.ConnectionStrings["BandProject"].ConnectionString))
@@ -38,27 +37,20 @@ namespace Band_Web.Controllers
                     parameters.Add("@UserPhone", signUpModel.UserPhone, DbType.String, ParameterDirection.Input);
                     parameters.Add("@UserSalt", salt, DbType.Binary, ParameterDirection.Input);
                     parameters.Add("@LastEditDate", signUpModel.LastEditDate, DbType.DateTime, ParameterDirection.Input);
-                    parameters.Add("@errorCode", dbType: DbType.Int32, direction: ParameterDirection.ReturnValue);
+                    parameters.Add("@RETURN_VALUE", dbType: DbType.Int32, direction: ParameterDirection.ReturnValue);
 
                     db.Execute("UserSignUpPrecedure", parameters, commandType: CommandType.StoredProcedure);
 
-                    returnResult = parameters.Get<int>("@errorCode");
+                    returnResult = parameters.Get<int>("@RETURN_VALUE");
                 }
-
-                if (returnResult == 0)
-                {
-                    return RedirectToRoute("Default");
-                }
-                else
-                {
-                    TempData["ErrorMsg"] = "Error: please contact to administrator.";
-                    return RedirectToAction("SignUp");
-                }
+                TempData["result"] = returnResult;
+                return View();
             }
             catch (Exception ex)
             {
-                TempData["Exception"] = ex.ToString();
-                return RedirectToAction("SignUp");
+                ex.ToString();
+                TempData["result"] = 2;
+                return View();
             }
         }
     }

@@ -56,9 +56,18 @@
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
+    <Reference Include="Google.Authenticator, Version=2.0.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\GoogleAuthenticator.2.0.1\lib\net45\Google.Authenticator.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>packages\Newtonsoft.Json.5.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="QRCoder, Version=1.3.5.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\QRCoder.1.3.5\lib\net40\QRCoder.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Drawing.Common, Version=4.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>packages\System.Drawing.Common.4.5.0\lib\net461\System.Drawing.Common.dll</HintPath>
     </Reference>
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
@@ -111,7 +120,8 @@
   <ItemGroup>
     <Content Include="Content\CSS\bootstrap.min.css" />
     <Content Include="Content\CSS\homepage.css" />
-    <Content Include="Content\CSS\SignUp.css" />
+    <Content Include="Content\CSS\login.css" />
+    <Content Include="Content\CSS\signUp.css" />
     <Content Include="Content\CSS\sweetalert2.css" />
     <Content Include="Content\CSS\tour.css" />
     <Content Include="Content\CSS\_Layout.css" />
@@ -120,8 +130,11 @@
     <Content Include="Content\Images\logo.png" />
     <Content Include="Content\Images\logo2.png" />
     <Content Include="Content\Images\main.png" />
+    <Content Include="Content\Images\sign-in-alt-solid.svg" />
+    <Content Include="Content\Images\wallpaper.jpg" />
     <Content Include="Content\Scripts\bootstrap.min.js" />
     <Content Include="Content\Scripts\jquery-3.5.1.min.js" />
+    <Content Include="Content\Scripts\login.js" />
     <Content Include="Content\Scripts\signUp.js" />
     <Content Include="Content\Scripts\sweetalert2.all.min.js" />
     <Content Include="Content\Scripts\tour.js" />
@@ -163,6 +176,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>BandProjectModel.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Controllers\loginPageController.cs" />
+    <Compile Include="Models\LoginModel.cs" />
+    <Compile Include="Models\SecctionDictionary.cs" />
     <Compile Include="Models\SignUpModel.cs" />
     <Compile Include="Models\tBandFormat.cs">
       <DependentUpon>BandProjectModel.tt</DependentUpon>
@@ -222,6 +238,7 @@
     <Content Include="Views\shopPage\BookShop.cshtml" />
     <Content Include="Views\tour\List.cshtml" />
     <Content Include="Views\signUpPage\SignUp.cshtml" />
+    <Content Include="Views\loginPage\loginPage.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

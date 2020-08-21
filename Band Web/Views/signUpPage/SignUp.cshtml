@@ -3,32 +3,45 @@
 @{
     ViewBag.Title = "SignUp";
     Layout = "~/Views/Layout/_Layout.cshtml";
-
-    if (TempData["ErrorMsg"] != null)
-    {
-        <script>
-            var message = @Html.Raw(Json.Encode(TempData["ErrorMsg"]))
-            alert(message);
-        </script>
-    }
-    if (TempData["Exception"] != null)
-    {
-        <script>
-            var message = @Html.Raw(Json.Encode(TempData["Exception"]))
-            alert(message);
-        </script>
-    }
 }
+
+
 @section Styles{
-    <link rel="stylesheet" href="~/Content/CSS/SignUp.css" />
+    <link rel="stylesheet" href="~/Content/CSS/signUp.css" />
+    <link href="~/Content/CSS/sweetalert2.css" rel="stylesheet" />
 }
 
 @section Scripts{
     <script src="~/Content/Scripts/signUp.js"></script>
+    <script src="~/Content/Scripts/sweetalert2.all.min.js"></script>
+    @if(TempData["result"] != null)
+    {
+    <script defer>
+        var value = @Json.Encode(TempData["result"]);
+        console.log(value);
+        if (value == 1) {
+            Swal.fire({
+            position: 'center',
+                type: 'success',
+                title: 'Success! Thank you!',
+                showConfirmButton: false,
+                timer: 1500
+            });
+        }
+        else if (value==0) {
+            Swal.fire({
+                type: 'error',
+                title: 'Oops...',
+                text: 'Account has exist!',
+                footer: 'Please try another account.'
+            });
+        }
+    </script>
+    }
 }
 
 <div class="container" style="width:30%">
-    <form class="form-signin" enctype="multipart/form-data" method="post">
+    <form class="form-signin" method="post" enctype="multipart/form-data">
         <div class="text-center mb-4">
             <img src="~/Content/Images/logo2.png" alt="" width="72" height="72">
             <h1 class="h3 mb-3 font-weight-normal">SIGN UP</h1>
@@ -70,7 +83,7 @@
                 <input type="checkbox" value="remember-me"> Remember me
             </label>
         </div>
-        <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+        <button class="btn btn-lg btn-primary btn-block" type="submit" id="submit">Sign in</button>
         <p class="mt-5 mb-3 text-muted text-center">© 2017-2020</p>
     </form>
 </div>

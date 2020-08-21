@@ -1,9 +1,4 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Band_Web.Models;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Diagnostics;
 using System.Security.Cryptography;
 
 namespace Band_Web.Models.Tests
