@@ -1,8 +1,4 @@
-﻿@{
-    //string userName = Session[Band_Web.Models.SecctionDictionary.UserName].ToString();
-}
-
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
@@ -45,14 +41,9 @@
                         <a class="nav-link" href="/tour/List">Tour</a>
                     </li>
                 </ul>
-                @*@if (userName == null)
-                    {*@
-                <a class="nav-link navbar-text" href="/signUpPage/SignUp" id="signUp">Become Our Fans!</a>
-                @*}
-                    else
-                    {
-                        <a class="nav-link navbar-text" href="#">@userName</a>
-                    }*@
+                @{
+                    Html.RenderPartial("_LayoutPartialView");
+                }
             </div>
         </nav>
     </div>

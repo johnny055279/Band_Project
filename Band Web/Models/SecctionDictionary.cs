@@ -7,6 +7,6 @@ namespace Band_Web.Models
 {
     public class SecctionDictionary
     {
-        public static readonly string UserName = "UserName";
+        public static readonly string UserAccount = "UserAccount";
     }
 }

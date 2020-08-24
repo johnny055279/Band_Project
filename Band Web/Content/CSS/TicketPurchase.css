@@ -1,0 +1,10 @@
+﻿h2 {
+    color: white;
+}
+
+dt, dd {
+    color: white;
+}
+a:hover{
+    text-decoration:none;
+}

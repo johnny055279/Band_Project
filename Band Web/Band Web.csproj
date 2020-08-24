@@ -123,6 +123,7 @@
     <Content Include="Content\CSS\login.css" />
     <Content Include="Content\CSS\signUp.css" />
     <Content Include="Content\CSS\sweetalert2.css" />
+    <Content Include="Content\CSS\TicketPurchase.css" />
     <Content Include="Content\CSS\tour.css" />
     <Content Include="Content\CSS\_Layout.css" />
     <Content Include="Content\Images\233483.png" />
@@ -218,6 +219,7 @@
       <DependentUpon>BandProjectModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModels\TicketPurchaseViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\web.config" />
@@ -239,6 +241,8 @@
     <Content Include="Views\tour\List.cshtml" />
     <Content Include="Views\signUpPage\SignUp.cshtml" />
     <Content Include="Views\loginPage\loginPage.cshtml" />
+    <Content Include="Views\tour\TicketPurchase.cshtml" />
+    <Content Include="Views\Shared\_LayoutPartialView.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -1,0 +1,13 @@
+﻿@{
+    string userAccount = "";
+    if (Session[Band_Web.Models.SecctionDictionary.UserAccount] != null)
+    {
+        userAccount = Session[Band_Web.Models.SecctionDictionary.UserAccount].ToString();
+        <a class="nav-link navbar-text" href="#" id="signUp">@userAccount</a>
+    }
+    else
+    {
+        userAccount = "Become Our Fans!";
+        <a class="nav-link navbar-text" href="/signUpPage/SignUp" id="signUp">@userAccount</a>
+    }
+}

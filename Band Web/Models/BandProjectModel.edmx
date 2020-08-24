@@ -119,7 +119,7 @@
           <Property Name="UserAccount" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="UserPassword" Type="varbinary(max)" Nullable="false" />
           <Property Name="UserEmail" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="UserSexual" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="UserSexual" Type="nvarchar" MaxLength="6" Nullable="false" />
           <Property Name="UserBirthday" Type="date" Nullable="false" />
           <Property Name="UserCountry" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="UserAddress" Type="nvarchar" MaxLength="50" />
@@ -491,7 +491,7 @@
           <Property Name="UserAccount" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="UserPassword" Type="Binary" Nullable="false" MaxLength="Max" FixedLength="false" />
           <Property Name="UserEmail" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="UserSexual" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="UserSexual" Type="String" Nullable="false" MaxLength="6" FixedLength="false" Unicode="true" />
           <Property Name="UserBirthday" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="UserAddress" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="UserPhone" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
