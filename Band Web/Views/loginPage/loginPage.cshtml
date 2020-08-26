@@ -1,8 +1,4 @@
 ﻿@model Band_Web.Models.LoginModel
-
-@{
-    ViewBag.Title = "loginPage";
-}
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,8 +7,6 @@
     <link rel="stylesheet" href="~/Content/CSS/bootstrap.min.css" />
     <link href="~/Content/CSS/sweetalert2.css" rel="stylesheet" />
     <link rel="stylesheet" href="~/Content/CSS/login.css" />
-
-    
 </head>
 <body>
     <div id="login-button">
@@ -22,7 +16,7 @@
         <h1>Log In</h1>
         <span class="close-btn"> &#10006 </span>
 
-        <form>
+        <form method="post" action="/loginPage/loginPage" enctype="multipart/form-data">
             <input type="text" name="UserAccount" placeholder="Account">
             <input type="password" name="UserPassword" placeholder="Password">
             <div class="btn-div">
@@ -39,7 +33,7 @@
     <div id="forgotten-container">
         <h1>Forgotten</h1>
         <span class="close-btn"> &#10006 </span>
-        <form>
+        <form method="post" action="/loginPage/loginPage" enctype="multipart/form-data">
             <input type="email" name="email" placeholder="E-mail" id="email">
             <div class="btn-div">
                 <button type="button" class="btn btn-lg btn-info btn-block" id="send-email">Get new password</button>
@@ -50,5 +44,22 @@
     <script src="~/Content/Scripts/jquery-3.5.1.min.js"></script>
     <script src="~/Content/Scripts/login.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.5.0/gsap.min.js"></script>
+    @{
+        ViewBag.Title = "loginPage";
+        if (TempData["AccountNotExit"] != null)
+        {
+            var alert = Json.Encode(TempData["AccountNotExit"]);
+            <script>
+                alert(alert);
+            </script>
+        }
+        if (TempData["Exception"] != null)
+        {
+            var alert = Json.Encode(TempData["Exception"]);
+            <script>
+                alert(alert);
+            </script>
+        }
+    }
 </body>
 </html>

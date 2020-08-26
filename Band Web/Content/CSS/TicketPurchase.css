@@ -1,4 +1,4 @@
-﻿h2 {
+﻿h2, h4, h3{
     color: white;
 }
 
@@ -7,4 +7,9 @@ dt, dd {
 }
 a:hover{
     text-decoration:none;
+}
+
+#span{
+    color:white;
+    font-size:1.5em;
 }

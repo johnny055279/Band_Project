@@ -1,8 +1,8 @@
 ﻿@{
     string userAccount = "";
-    if (Session[Band_Web.Models.SecctionDictionary.UserAccount] != null)
+    if (Session[Band_Web.Models.SessionDictionary.UserAccount] != null)
     {
-        userAccount = Session[Band_Web.Models.SecctionDictionary.UserAccount].ToString();
+        userAccount = Session[Band_Web.Models.SessionDictionary.UserAccount].ToString();
         <a class="nav-link navbar-text" href="#" id="signUp">@userAccount</a>
     }
     else

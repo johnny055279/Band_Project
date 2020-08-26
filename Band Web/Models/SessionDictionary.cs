@@ -5,7 +5,7 @@ using System.Web;
 
 namespace Band_Web.Models
 {
-    public class SecctionDictionary
+    public class SessionDictionary
     {
         public static readonly string UserAccount = "UserAccount";
     }

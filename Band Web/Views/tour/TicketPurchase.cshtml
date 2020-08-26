@@ -20,29 +20,34 @@
     <div class="progress">
         <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 75%"></div>
     </div>
-
-    <h4>TicketPurchaseModel</h4>
     <hr />
     <div class="tab-content" id="myTabContent">
-        <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="form-tab">
-            <h3>Please Check the tickets Info</h3>
+        <div class="tab-pane fade show active" id="detail" role="tabpanel" aria-labelledby="form-tab">
+            <h3>Please confirm your order detail</h3>
             <ul class="list-group">
-                <li class="list-group-item list-group-item-secondary">Date:@Model.tticketDetail.TicketDate.ToString("yyyy-MM-dd")</li>
-                <li class="list-group-item list-group-item-secondary">Location:@Model.tticketDetail.TicketLocation</li>
-                <li class="list-group-item list-group-item-secondary">Venue:@Model.tticketDetail.TicketVenue</li>
+                <li class="list-group-item list-group-item-dark">Date: @Model.tticketDetail.TicketDate.ToString("yyyy-MM-dd")</li>
+                <li class="list-group-item list-group-item-dark">Location: @Model.tticketDetail.TicketLocation</li>
+                <li class="list-group-item list-group-item-dark">Venue: @Model.tticketDetail.TicketVenue</li>
             </ul>
-        </div>
-        <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
             <form>
-                <input class="form-control" type="text" required placeholder="Email" value="@Model.tUser.UserEmail" disabled />
-                <input class="form-control" type="text" required placeholder="Name" value="@Model.tUser.UserAccount" />
-                <input class="form-control" type="text" required placeholder="" />
-                <input class="form-control" type="text" required placeholder="" />
+                <label>Account</label><input class="form-control" type="text" required placeholder="Account" value="@Model.tUser.UserAccount" />
+                <label>Email</label><input class="form-control" type="text" required placeholder="Email" value="@Model.tUser.UserEmail" />
+                <label>Quantity</label><input class="form-control" type="number" required placeholder="Quantity" max="4" min="1" value="1" />
+                <p>Total Price: </p>
             </form>
+        </div>
+        <div class="tab-pane fade" id="" role="tabpanel" aria-labelledby="profile-tab">
+        </div>
+        <div class="tab-pane fade" id="final" role="tabpanel" aria-labelledby="profile-tab">
         </div>
     </div>
     <p>
-        @Html.ActionLink("Back to List", "List") |
-        @Html.ActionLink("Next", "Edit", new { /* id = Model.PrimaryKey */ })
+        @Html.ActionLink("Back to List", "List", "", new { @class = "btn btn-secondary" })<span id="span"> | </span>
+        <a class="btn btn-secondary" id="nav-home-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="nav-home" aria-selected="true">NEXT</a>
     </p>
 </div>
+<input type="hidden" value="@Model.tticketDetail.TicketDetailId" name="TicketDetailId" />
+<input type="hidden" value="@Model.tUser.UserId" name="UserId" />
+<input type="hidden" value="@Model.tticketDetail.TicketDate" name="TicketDate" />
+<input type="hidden" value="@Model.tticketDetail.TicketLocation" name="TicketLocation" />
+<input type="hidden" value="@Model.tticketDetail.TicketVenue" name="TicketVenue" />

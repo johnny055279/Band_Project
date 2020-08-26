@@ -43,7 +43,7 @@ namespace Band_Web.Controllers
                 using (IDbConnection db = new SqlConnection(ConfigurationManager.ConnectionStrings["BandProject"].ConnectionString))
                 {
                     string strConnect = $"select * from tTicketDetail where TicketDetailId = {id}; " +
-                                        $"select * from tUser where UserAccount = {SecctionDictionary.UserAccount};";
+                                        $"select * from tUser where UserAccount = {SessionDictionary.UserAccount};";
                     using (var results = db.QueryMultiple(strConnect))
                     {
                         var ticketDetail = results.Read<tTicketDetail>().FirstOrDefault();
@@ -64,9 +64,34 @@ namespace Band_Web.Controllers
         [HttpPost]
         public ActionResult TicketPurchase(TicketPurchaseViewModel model)
         {
-            using (IDbConnection db = new SqlConnection(ConfigurationManager.ConnectionStrings["BandProject"].ConnectionString))
+            try
             {
+                using (IDbConnection db = new SqlConnection(ConfigurationManager.ConnectionStrings["BandProject"].ConnectionString))
+                {
+                    //get UserId
+                    var UserId = db.Query<tUser>($"select UserId form tUser where UserId = {model.tUser.UserId}").FirstOrDefault();
+                    DynamicParameters parameters = new DynamicParameters();
+                    parameters.Add("@UserId", model.tUser.UserAccount, DbType.String, ParameterDirection.Input);
+
+                    db.Execute("TicketPurchaseProcedure", parameters, commandType: CommandType.StoredProcedure);
+                }
+
+                ClassLibrary.PurchaseDetailEmail.TicketDetailEmailSending(model.Email,
+                                                                          model.Account,
+                                                                          model.tticketDetail.TicketDate,
+                                                                          model.tticketDetail.TicketLocation,
+                                                                          model.tticketDetail.TicketVenue,
+                                                                          model.Quantity);
+                return RedirectToAction("ConfirmPurchase");
             }
+            catch
+            {
+                return View();
+            }
+        }
+
+        public ActionResult ConfirmPurchase()
+        {
             return View();
         }
     }

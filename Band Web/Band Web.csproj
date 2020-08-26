@@ -179,7 +179,7 @@
     </Compile>
     <Compile Include="Controllers\loginPageController.cs" />
     <Compile Include="Models\LoginModel.cs" />
-    <Compile Include="Models\SecctionDictionary.cs" />
+    <Compile Include="Models\SessionDictionary.cs" />
     <Compile Include="Models\SignUpModel.cs" />
     <Compile Include="Models\tBandFormat.cs">
       <DependentUpon>BandProjectModel.tt</DependentUpon>
@@ -243,6 +243,7 @@
     <Content Include="Views\loginPage\loginPage.cshtml" />
     <Content Include="Views\tour\TicketPurchase.cshtml" />
     <Content Include="Views\Shared\_LayoutPartialView.cshtml" />
+    <Content Include="Views\tour\ConfirmPurchase.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
