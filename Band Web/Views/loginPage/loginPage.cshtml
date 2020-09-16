@@ -3,7 +3,6 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
-    <title>Login</title>
     <link rel="stylesheet" href="~/Content/CSS/bootstrap.min.css" />
     <link href="~/Content/CSS/sweetalert2.css" rel="stylesheet" />
     <link rel="stylesheet" href="~/Content/CSS/login.css" />
@@ -28,6 +27,13 @@
                 <span id="forgotten">Forgotten password</span>
             </div>
         </form>
+        <p style="color:white; text-align:center;">--------OR---------</p>
+        <div>
+            <a href="#" id="googleLogin"><i class="fab fa-google"></i>&emsp;Login With Google</a>
+        </div>
+        <div>
+            <a href="#" id="facebookLogin" scope="public_profile,email" onclick="checkLoginState()"><i class="fab fa-facebook-f"></i>&emsp;Login with Facebook</a>
+        </div>
     </div>
 
     <div id="forgotten-container">
@@ -40,10 +46,14 @@
             </div>
         </form>
     </div>
-    <script src="~/Content/Scripts/sweetalert2.all.min.js"></script>
+
     <script src="~/Content/Scripts/jquery-3.5.1.min.js"></script>
     <script src="~/Content/Scripts/login.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.5.0/gsap.min.js"></script>
+    <script src="https://kit.fontawesome.com/b8dd0a8716.js" crossorigin="anonymous"></script>
+    <script src="~/Content/Scripts/facebookAuth.js"></script>
+    <script src="~/Content/Scripts/sweetalert2.all.min.js"></script>
+
     @{
         ViewBag.Title = "loginPage";
         if (TempData["AccountNotExit"] != null)

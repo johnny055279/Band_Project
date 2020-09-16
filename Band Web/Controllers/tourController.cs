@@ -64,29 +64,41 @@ namespace Band_Web.Controllers
         [HttpPost]
         public ActionResult TicketPurchase(TicketPurchaseViewModel model)
         {
+            int errorValue;
             try
             {
                 using (IDbConnection db = new SqlConnection(ConfigurationManager.ConnectionStrings["BandProject"].ConnectionString))
                 {
-                    //get UserId
-                    var UserId = db.Query<tUser>($"select UserId form tUser where UserId = {model.tUser.UserId}").FirstOrDefault();
                     DynamicParameters parameters = new DynamicParameters();
-                    parameters.Add("@UserId", model.tUser.UserAccount, DbType.String, ParameterDirection.Input);
-
+                    parameters.Add("@UserId", model.UserId, DbType.String, ParameterDirection.Input);
+                    parameters.Add("@TicketDetailId", model.TicketDetailId, DbType.String, ParameterDirection.Input);
+                    parameters.Add("@Quantity", model.Quantity, DbType.String, ParameterDirection.Input);
+                    parameters.Add("@RETURN_VALUE", dbType: DbType.Int32, direction: ParameterDirection.ReturnValue);
                     db.Execute("TicketPurchaseProcedure", parameters, commandType: CommandType.StoredProcedure);
+                    errorValue = parameters.Get<int>("@RETURN_VALUE");
                 }
 
                 ClassLibrary.PurchaseDetailEmail.TicketDetailEmailSending(model.Email,
                                                                           model.Account,
-                                                                          model.tticketDetail.TicketDate,
-                                                                          model.tticketDetail.TicketLocation,
-                                                                          model.tticketDetail.TicketVenue,
+                                                                          model.TicketDate,
+                                                                          model.TicketLocation,
+                                                                          model.TicketVenue,
                                                                           model.Quantity);
-                return RedirectToAction("ConfirmPurchase");
+
+                if (errorValue == 0)
+                {
+                    return RedirectToAction("ConfirmPurchase");
+                }
+                else
+                {
+                    TempData["ERROR"] = "Server error, please try again.";
+                    return RedirectToAction("List");
+                }
             }
             catch
             {
-                return View();
+                TempData["ERROR"] = "Server error, please try again.";
+                return RedirectToAction("List");
             }
         }
 

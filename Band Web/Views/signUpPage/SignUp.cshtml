@@ -41,48 +41,63 @@
 }
 
 <div class="container" style="width:30%">
+    <div class="text-center mb-4">
+        <img src="~/Content/Images/logo2.png" alt="" width="72" height="72">
+        <h1 class="h3 mb-3 font-weight-normal">SIGN UP</h1>
+    </div>
     <form class="form-signin" method="post" enctype="multipart/form-data">
-        <div class="text-center mb-4">
-            <img src="~/Content/Images/logo2.png" alt="" width="72" height="72">
-            <h1 class="h3 mb-3 font-weight-normal">SIGN UP</h1>
-        </div>
-
-        <div class="form-group">
-            <input type="text" id="inputAccount" class="form-control" name="UserAccount" placeholder="Account" required="" autofocus="" maxlength="30">
-        </div>
-        <div class="form-group">
-            <input type="password" id="inputPassword" class="form-control" name="UserPassword" placeholder="Password" required="">
-        </div>
-        <div class="form-group">
-            <input type="email" id="inputEmail" class="form-control" name="UserEmail" placeholder="Email address" required="" maxlength="50">
-        </div>
-        <div class="form-group">
-            <select type="text" id="inputSexual" class="form-control" name="UserSexual" required="">
-                <option selected disabled hidden>Gender</option>
-                <option>Male</option>
-                <option>Female</option>
-            </select>
-        </div>
-        <div class="form-group">
-            <input type="date" id="inputBirthday" class="form-control" name="UserBirthday" max="@DateTime.Now.ToString("yyyy-MM-dd")" required="">
-        </div>
-        <div class="form-group">
-            <select type="text" id="inputCountry" class="form-control" name="UserCountry" required="">
-                <option hidden disabled selected>Choose Your Country</option>
-            </select>
-        </div>
-        <div class="form-group">
-            <input type="text" id="inputAddress" class="form-control" name="UserAddress" required="" placeholder="Address" maxlength="50">
-        </div>
-        <div class="form-group">
-            <input type="tel" id="inputPhone" class="form-control" name="UserPhone" required="" placeholder="Phone" maxlength="20">
-        </div>
-
-        <div class="checkbox mb-3">
-            <label>
-                <input type="checkbox" value="remember-me"> Remember me
-            </label>
-        </div>
+        <table class="table-borderless">
+            <tr>
+                <td>
+                    <div class="form-group">
+                        <input type="text" id="inputAccount" class="form-control" name="UserAccount" placeholder="Account" required="" autofocus="" maxlength="30">
+                    </div>
+                </td>
+                <td>
+                    <div class="form-group">
+                        <input type="password" id="inputPassword" class="form-control" name="UserPassword" placeholder="Password" required="">
+                    </div>
+                </td>
+                <td>
+                    <div class="form-group">
+                        <input type="email" id="inputEmail" class="form-control" name="UserEmail" placeholder="Email address" required="" maxlength="50">
+                    </div>
+                </td>
+                <td>
+                    <div class="form-group">
+                        <select type="text" id="inputSexual" class="form-control" name="UserSexual" required="">
+                            <option selected disabled hidden>Gender</option>
+                            <option>Male</option>
+                            <option>Female</option>
+                        </select>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="form-group">
+                        <input type="date" id="inputBirthday" class="form-control" name="UserBirthday" max="@DateTime.Now.ToString("yyyy-MM-dd")" required="">
+                    </div>
+                </td>
+                <td>
+                    <div class="form-group">
+                        <select type="text" id="inputCountry" class="form-control" name="UserCountry" required="">
+                            <option hidden disabled selected>Choose Your Country</option>
+                        </select>
+                    </div>
+                </td>
+                <td>
+                    <div class="form-group">
+                        <input type="text" id="inputAddress" class="form-control" name="UserAddress" required="" placeholder="Address" maxlength="50">
+                    </div>
+                </td>
+                <td>
+                    <div class="form-group">
+                        <input type="tel" id="inputPhone" class="form-control" name="UserPhone" required="" placeholder="Phone" maxlength="20">
+                    </div>
+                </td>
+            </tr>
+        </table>
         <button class="btn btn-lg btn-primary btn-block" type="submit" id="submit">Sign in</button>
         <p class="mt-5 mb-3 text-muted text-center">© 2017-2020</p>
     </form>

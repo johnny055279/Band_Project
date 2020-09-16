@@ -5,7 +5,7 @@
     Layout = "~/Views/Layout/_Layout.cshtml";
     if (TempData["Error"] != null)
     {
-        string alert = Json.Encode(TempData["Error"]);
+        string alert = Json.Encode(TempData["ERROR"]);
         <script>
             alert(alert);
         </script>
@@ -29,11 +29,17 @@
                 <li class="list-group-item list-group-item-dark">Location: @Model.tticketDetail.TicketLocation</li>
                 <li class="list-group-item list-group-item-dark">Venue: @Model.tticketDetail.TicketVenue</li>
             </ul>
-            <form>
-                <label>Account</label><input class="form-control" type="text" required placeholder="Account" value="@Model.tUser.UserAccount" />
-                <label>Email</label><input class="form-control" type="text" required placeholder="Email" value="@Model.tUser.UserEmail" />
-                <label>Quantity</label><input class="form-control" type="number" required placeholder="Quantity" max="4" min="1" value="1" />
-                <p>Total Price: </p>
+            <form method="post" enctype="multipart/form-data" action="/tour/TicketPurchase">
+                <label>Account</label><input class="form-control" type="text" required name="Account" value="@Model.tUser.UserAccount" />
+                <label>Email</label><input class="form-control" type="text" required name="Email" value="@Model.tUser.UserEmail" />
+                <label>Quantity</label><input class="form-control" type="number" required max="4" min="1" value="1" name="Quantity" />
+                <p id="totalPrice">Total Price:</p>
+                <button class="btn btn-lg btn-secondary" type="submit">Confirm</button>
+                <input type="hidden" value="@Model.tticketDetail.TicketDetailId" name="TicketDetailId" />
+                <input type="hidden" value="@Model.tUser.UserId" name="UserId" />
+                <input type="hidden" value="@Model.tticketDetail.TicketDate" name="TicketDate" />
+                <input type="hidden" value="@Model.tticketDetail.TicketLocation" name="TicketLocation" />
+                <input type="hidden" value="@Model.tticketDetail.TicketVenue" name="TicketVenue" />
             </form>
         </div>
         <div class="tab-pane fade" id="" role="tabpanel" aria-labelledby="profile-tab">
@@ -46,8 +52,3 @@
         <a class="btn btn-secondary" id="nav-home-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="nav-home" aria-selected="true">NEXT</a>
     </p>
 </div>
-<input type="hidden" value="@Model.tticketDetail.TicketDetailId" name="TicketDetailId" />
-<input type="hidden" value="@Model.tUser.UserId" name="UserId" />
-<input type="hidden" value="@Model.tticketDetail.TicketDate" name="TicketDate" />
-<input type="hidden" value="@Model.tticketDetail.TicketLocation" name="TicketLocation" />
-<input type="hidden" value="@Model.tticketDetail.TicketVenue" name="TicketVenue" />

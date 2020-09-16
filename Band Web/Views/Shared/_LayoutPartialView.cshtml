@@ -3,11 +3,19 @@
     if (Session[Band_Web.Models.SessionDictionary.UserAccount] != null)
     {
         userAccount = Session[Band_Web.Models.SessionDictionary.UserAccount].ToString();
-        <a class="nav-link navbar-text" href="#" id="signUp">@userAccount</a>
+        <li class="nav-item">
+            <div class="background-one link-container">
+                <a class="link-one" href="#" id="signUp">@userAccount</a>
+            </div>
+        </li>
     }
     else
     {
-        userAccount = "Become Our Fans!";
-        <a class="nav-link navbar-text" href="/signUpPage/SignUp" id="signUp">@userAccount</a>
+        userAccount = "SIGN UP";
+        <li class="nav-item">
+            <div class="background-one link-container">
+                <a class="link-one" href="/signUpPage/SignUp">@userAccount</a>
+            </div>
+        </li>
     }
 }

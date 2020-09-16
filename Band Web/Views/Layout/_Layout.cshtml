@@ -17,16 +17,22 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="/memberPage/MemberPage">About Us</a>
+                        <div class="background-one link-container">
+                            <a class="link-one" href="/memberPage/MemberPage">About</a>
+                        </div>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Photo</a>
+                        <div class="background-one link-container">
+                            <a class="link-one" href="#">Photo</a>
+                        </div>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Video</a>
+                        <div class="background-one link-container">
+                            <a class="link-one" href="#">Video</a>
+                        </div>
                     </li>
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color:white">
                             Shop
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -38,13 +44,20 @@
                         </div>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/tour/List">Tour</a>
+                        <div class="background-one link-container">
+                            <a class="link-one" href="/tour/List">Tour</a>
+                        </div>
+                    </li>
+
+                    @{
+                        Html.RenderPartial("_LayoutPartialView");
+                    }
+                    <li class="nav-item">
+                        <div class="background-one link-container">
+                            <a class="link-one" id="login" href="/loginPage/loginPage">LOGIN</a>
+                        </div>
                     </li>
                 </ul>
-                @{
-                    Html.RenderPartial("_LayoutPartialView");
-                }
-                <a class="nav-link" id="login" href="/loginPage/loginPage">LOGIN</a>
             </div>
         </nav>
     </div>
