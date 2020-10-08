@@ -198,6 +198,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\homePageController.cs" />
     <Compile Include="Controllers\memberPageController.cs" />
+    <Compile Include="Controllers\postsController.cs" />
     <Compile Include="Controllers\shopPageController.cs" />
     <Compile Include="Controllers\signUpPageController.cs" />
     <Compile Include="Controllers\tourController.cs" />
@@ -288,6 +289,7 @@
     <Content Include="Views\Shared\_LayoutPartialView.cshtml" />
     <Content Include="Views\tour\ConfirmPurchase.cshtml" />
     <Content Include="Views\user\UserEdit.cshtml" />
+    <Content Include="Views\posts\List.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
