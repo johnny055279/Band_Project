@@ -7,6 +7,6 @@ namespace Band_Web.Models
 {
     public class SessionDictionary
     {
-        public static readonly string UserAccount = "UserAccount";
+        public static readonly string User_Account = "User_Account";
     }
 }

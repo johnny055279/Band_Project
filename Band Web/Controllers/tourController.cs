@@ -1,14 +1,11 @@
 ﻿using Band_Web.Models;
 using Band_Web.ViewModels;
 using Dapper;
-using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
-using System.Runtime.Remoting.Messaging;
-using System.Web;
 using System.Web.Mvc;
 
 namespace Band_Web.Controllers
@@ -38,12 +35,13 @@ namespace Band_Web.Controllers
         public ActionResult TicketPurchase(int id)
         {
             TicketPurchaseViewModel viewModel = new TicketPurchaseViewModel();
+            var account = Session[SessionDictionary.User_Account].ToString();
             try
             {
                 using (IDbConnection db = new SqlConnection(ConfigurationManager.ConnectionStrings["BandProject"].ConnectionString))
                 {
                     string strConnect = $"select * from tTicketDetail where TicketDetailId = {id}; " +
-                                        $"select * from tUser where UserAccount = {SessionDictionary.UserAccount};";
+                                        $"select * from tUser where UserAccount = '{account}';";
                     using (var results = db.QueryMultiple(strConnect))
                     {
                         var ticketDetail = results.Read<tTicketDetail>().FirstOrDefault();

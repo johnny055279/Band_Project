@@ -54,7 +54,7 @@ namespace Band_Web.Models
                 }
                 else
                 {
-                    Session[SessionDictionary.UserAccount] = loginModel.UserAccount;
+                    Session[SessionDictionary.User_Account] = loginModel.UserAccount;
                     return RedirectToAction("HomePage", "homePage");
                 }
             }

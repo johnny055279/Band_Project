@@ -1,0 +1,16 @@
+﻿label {
+    color: white;
+}
+
+h2 {
+    text-align: center;
+    color: white;
+}
+
+#psw{
+    float:right;
+}
+
+.modal-label{
+    color:black;
+}

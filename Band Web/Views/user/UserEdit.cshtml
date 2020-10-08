@@ -1,0 +1,123 @@
+﻿@model Band_Web.Models.tUser
+
+@{
+    ViewBag.Title = "UserEdit";
+    Layout = "~/Views/Layout/_Layout.cshtml";
+    string date = Model.UserBirthday.ToString("yyyy-MM-dd");
+    if (TempData["Error"] != null)
+    {
+        var Error = Json.Encode(TempData["Error"]);
+        <script>alert(Error)</script>
+    }
+}
+
+@section Styles{
+    <link href="~/Content/CSS/userEdit.css" rel="stylesheet" />
+}
+
+@section Scripts{
+    <script src="~/Content/Scripts/userEdit.js"></script>
+}
+
+<div class="container" style="width:40%;">
+    @using (Html.BeginForm(new { id = Model.UserId }))
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+            <div class="form-group">
+                <label class="control-label col-md-2">Account</label>
+                <div class="col-md-10">
+                    <input type="text" value="@Model.UserAccount" class="form-control" disabled="disabled" />
+                    <input type="button" value="Change Password" class="btn btn-danger" id="psw" data-toggle="modal" data-target="#pswModal" />
+                    @Html.ValidationMessageFor(model => model.UserAccount, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-md-2">Email</label>
+                <div class="col-md-10">
+                    <input type="text" name="UserEmail" value="@Model.UserEmail" class="form-control" />
+                    @Html.ValidationMessageFor(model => model.UserEmail, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-md-2">Sexual</label>
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.UserSexual, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
+                    @Html.ValidationMessageFor(model => model.UserSexual, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-md-2">Birthday</label>
+                <div class="col-md-10">
+                    <input type="date" name="UserBirthday" value="@date" class="form-control" />
+                    @Html.ValidationMessageFor(model => model.UserBirthday, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-md-2">Country</label>
+                <div class="col-md-10">
+                    <select class="form-control" name="UserCountry">
+                        <option>1</option>
+                        <option>Bahrain</option>
+                        <option>2</option>
+                    </select>
+                    @Html.ValidationMessageFor(model => model.UserCountry, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-md-2">Address</label>
+                <div class="col-md-10">
+                    <input type="text" name="UserAddress" class="form-control" value="@Model.UserAddress" />
+                    @Html.ValidationMessageFor(model => model.UserAddress, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-md-2">Phone</label>
+                <div class="col-md-10">
+                    <input type="text" name="UserPhone" class="form-control" value="@Model.UserPhone" />
+                    @Html.ValidationMessageFor(model => model.UserPhone, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Save" class="btn btn-primary" />
+                    @Html.ActionLink("Back", "HomePage", "homePage", "", new { htmlAttributes = new { @class = "btn btn-primary" } })
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="pswModal" tabindex="-1" aria-labelledby="pswModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="pswModalLabel">Change Password...</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <label class="control-label modal-label">Old Password</label>
+                        <input type="password" class="form-control" />
+                        <label class="control-label modal-label">New Password</label>
+                        <input type="password" class="form-control" />
+                        <label class="control-label modal-label">Confirm Password</label>
+                        <input type="password" class="form-control" name="UserPassword" />
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal" id="cancel">Cancel</button>
+                        <button type="button" class="btn btn-primary" id="save-change">Save changes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
