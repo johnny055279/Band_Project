@@ -37,5 +37,7 @@ namespace Band_Web.Models
         public virtual DbSet<tTicketDetail> tTicketDetail { get; set; }
         public virtual DbSet<tTicketPurchase> tTicketPurchase { get; set; }
         public virtual DbSet<tUser> tUser { get; set; }
+        public virtual DbSet<tPost> tPost { get; set; }
+        public virtual DbSet<tReply> tReply { get; set; }
     }
 }

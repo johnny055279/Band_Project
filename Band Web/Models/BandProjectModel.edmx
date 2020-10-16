@@ -53,6 +53,18 @@
           <Property Name="ShipStatusId" Type="tinyint" Nullable="false" />
           <Property Name="LastEditDate" Type="date" Nullable="false" />
         </EntityType>
+        <EntityType Name="tPost">
+          <Key>
+            <PropertyRef Name="PostId" />
+          </Key>
+          <Property Name="PostId" Type="int" Nullable="false" />
+          <Property Name="PostContent" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="PostLikeCount" Type="int" Nullable="false" />
+          <Property Name="PostDislikeCount" Type="int" Nullable="false" />
+          <Property Name="ReplyCount" Type="int" Nullable="false" />
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="LastEditDate" Type="datetime" Nullable="false" />
+        </EntityType>
         <EntityType Name="tProduct">
           <Key>
             <PropertyRef Name="ProductId" />
@@ -80,6 +92,17 @@
           <Property Name="ProductTypeId" Type="tinyint" Nullable="false" />
           <Property Name="ProductType" Type="nvarchar" MaxLength="20" Nullable="false" />
           <Property Name="LastEditDate" Type="date" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tReply">
+          <Key>
+            <PropertyRef Name="ReplyId" />
+          </Key>
+          <Property Name="ReplyId" Type="int" Nullable="false" />
+          <Property Name="PostId" Type="int" Nullable="false" />
+          <Property Name="ReplyContent" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="ReplyLikeCount" Type="int" Nullable="false" />
+          <Property Name="ReplyDislikeCount" Type="int" Nullable="false" />
+          <Property Name="LastEditDate" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityType Name="tShipStatus">
           <Key>
@@ -125,6 +148,7 @@
           <Property Name="UserAddress" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="UserPhone" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="UserSalt" Type="varbinary(max)" Nullable="false" />
+          <Property Name="Admin" Type="bit" Nullable="false" />
           <Property Name="LastEditDate" Type="date" Nullable="false" />
         </EntityType>
         <Association Name="FK_tMember_tBandFormat">
@@ -253,9 +277,11 @@
           <EntitySet Name="tMember" EntityType="Self.tMember" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tOrder" EntityType="Self.tOrder" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tOrderDetail" EntityType="Self.tOrderDetail" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tPost" EntityType="Self.tPost" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tProduct" EntityType="Self.tProduct" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tProductDetail" EntityType="Self.tProductDetail" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tProductType" EntityType="Self.tProductType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tReply" EntityType="Self.tReply" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tShipStatus" EntityType="Self.tShipStatus" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tTicketDetail" EntityType="Self.tTicketDetail" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tTicketPurchase" EntityType="Self.tTicketPurchase" Schema="dbo" store:Type="Tables" />
@@ -358,6 +384,8 @@
             <End Role="tUser" EntitySet="tUser" />
             <End Role="tTicketPurchase" EntitySet="tTicketPurchase" />
           </AssociationSet>
+          <EntitySet Name="tPost" EntityType="BandProjectModel.tPost" />
+          <EntitySet Name="tReply" EntityType="BandProjectModel.tReply" />
         </EntityContainer>
         <EntityType Name="tBandFormat">
           <Key>
@@ -500,6 +528,7 @@
           <NavigationProperty Name="tOrder" Relationship="BandProjectModel.FK_tOrder_tUser" FromRole="tUser" ToRole="tOrder" />
           <NavigationProperty Name="tTicketPurchase" Relationship="BandProjectModel.FK_tTicketPurchase_tTicketPurchase" FromRole="tUser" ToRole="tTicketPurchase" />
           <Property Name="UserSalt" Type="Binary" Nullable="false" MaxLength="Max" FixedLength="false" />
+          <Property Name="Admin" Type="Boolean" Nullable="false" />
         </EntityType>
         <Association Name="FK_tMember_tBandFormat">
           <End Type="BandProjectModel.tBandFormat" Role="tBandFormat" Multiplicity="1" />
@@ -621,6 +650,29 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="tPost">
+          <Key>
+            <PropertyRef Name="PostId" />
+          </Key>
+          <Property Name="PostId" Type="Int32" Nullable="false" />
+          <Property Name="PostContent" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PostLikeCount" Type="Int32" Nullable="false" />
+          <Property Name="PostDislikeCount" Type="Int32" Nullable="false" />
+          <Property Name="ReplyCount" Type="Int32" Nullable="false" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="LastEditDate" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <EntityType Name="tReply">
+          <Key>
+            <PropertyRef Name="ReplyId" />
+          </Key>
+          <Property Name="ReplyId" Type="Int32" Nullable="false" />
+          <Property Name="PostId" Type="Int32" Nullable="false" />
+          <Property Name="ReplyContent" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ReplyLikeCount" Type="Int32" Nullable="false" />
+          <Property Name="ReplyDislikeCount" Type="Int32" Nullable="false" />
+          <Property Name="LastEditDate" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -747,6 +799,7 @@
           <EntitySetMapping Name="tUser">
             <EntityTypeMapping TypeName="BandProjectModel.tUser">
               <MappingFragment StoreEntitySet="tUser">
+                <ScalarProperty Name="Admin" ColumnName="Admin" />
                 <ScalarProperty Name="UserSalt" ColumnName="UserSalt" />
                 <ScalarProperty Name="LastEditDate" ColumnName="LastEditDate" />
                 <ScalarProperty Name="UserCountry" ColumnName="UserCountry" />
@@ -758,6 +811,31 @@
                 <ScalarProperty Name="UserPassword" ColumnName="UserPassword" />
                 <ScalarProperty Name="UserAccount" ColumnName="UserAccount" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tPost">
+            <EntityTypeMapping TypeName="BandProjectModel.tPost">
+              <MappingFragment StoreEntitySet="tPost">
+                <ScalarProperty Name="LastEditDate" ColumnName="LastEditDate" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="ReplyCount" ColumnName="ReplyCount" />
+                <ScalarProperty Name="PostDislikeCount" ColumnName="PostDislikeCount" />
+                <ScalarProperty Name="PostLikeCount" ColumnName="PostLikeCount" />
+                <ScalarProperty Name="PostContent" ColumnName="PostContent" />
+                <ScalarProperty Name="PostId" ColumnName="PostId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tReply">
+            <EntityTypeMapping TypeName="BandProjectModel.tReply">
+              <MappingFragment StoreEntitySet="tReply">
+                <ScalarProperty Name="LastEditDate" ColumnName="LastEditDate" />
+                <ScalarProperty Name="ReplyDislikeCount" ColumnName="ReplyDislikeCount" />
+                <ScalarProperty Name="ReplyLikeCount" ColumnName="ReplyLikeCount" />
+                <ScalarProperty Name="ReplyContent" ColumnName="ReplyContent" />
+                <ScalarProperty Name="PostId" ColumnName="PostId" />
+                <ScalarProperty Name="ReplyId" ColumnName="ReplyId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

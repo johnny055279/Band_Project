@@ -160,6 +160,7 @@
     <Content Include="Content\CSS\bootstrap.min.css" />
     <Content Include="Content\CSS\homepage.css" />
     <Content Include="Content\CSS\login.css" />
+    <Content Include="Content\CSS\post.css" />
     <Content Include="Content\CSS\signUp.css" />
     <Content Include="Content\CSS\sweetalert2.css" />
     <Content Include="Content\CSS\TicketPurchase.css" />
@@ -223,6 +224,7 @@
     </Compile>
     <Compile Include="Controllers\loginPageController.cs" />
     <Compile Include="Models\LoginModel.cs" />
+    <Compile Include="Models\PostModel.cs" />
     <Compile Include="Models\SessionDictionary.cs" />
     <Compile Include="Models\SignUpModel.cs" />
     <Compile Include="Models\tBandFormat.cs">
@@ -241,6 +243,9 @@
     <Compile Include="Models\tOrderDetail.cs">
       <DependentUpon>BandProjectModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\tPost.cs">
+      <DependentUpon>BandProjectModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\tProduct.cs">
       <DependentUpon>BandProjectModel.tt</DependentUpon>
     </Compile>
@@ -248,6 +253,9 @@
       <DependentUpon>BandProjectModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\tProductType.cs">
+      <DependentUpon>BandProjectModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\tReply.cs">
       <DependentUpon>BandProjectModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\tShipStatus.cs">
@@ -300,6 +308,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Content\Fonts\" />
+    <Folder Include="Content\Images\PostsImage\" />
     <Folder Include="Hubs\" />
   </ItemGroup>
   <ItemGroup>

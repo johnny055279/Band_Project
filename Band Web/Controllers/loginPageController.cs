@@ -1,16 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
-using System.Data.Common;
 using System.Data.SqlClient;
 using System.Linq;
-using System.Net.Mail;
-using System.Web;
 using System.Web.Mvc;
-using System.Web.UI.WebControls;
 using ClassLibrary;
 using Dapper;
+using StackExchange.Redis;
 
 namespace Band_Web.Models
 {
@@ -54,7 +50,14 @@ namespace Band_Web.Models
                 }
                 else
                 {
-                    Session[SessionDictionary.User_Account] = loginModel.UserAccount;
+                    Session[SessionDictionary.User_Account] = loginModel.UserAccount + "UserAccount";
+
+                    //Redis Db Testing
+                    RedisConnection.Init("127.0.0.1:6379");
+                    ConnectionMultiplexer redisConnectionMultiplexer = RedisConnection.RedisConnectionInstance.ConnectionMultiplexer;
+                    IDatabase redisDb = redisConnectionMultiplexer.GetDatabase();
+                    redisDb.StringSet(loginModel.UserAccount + "UserAccount", loginModel.UserAccount);
+
                     return RedirectToAction("HomePage", "homePage");
                 }
             }

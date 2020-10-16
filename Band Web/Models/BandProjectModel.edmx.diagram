@@ -27,6 +27,8 @@
         <AssociationConnector Association="BandProjectModel.FK_tProductDetail_tProduct" />
         <AssociationConnector Association="BandProjectModel.FK_tTicketPurchase_tTicketDetail" />
         <AssociationConnector Association="BandProjectModel.FK_tTicketPurchase_tTicketPurchase" />
+        <EntityTypeShape EntityType="BandProjectModel.tPost" Width="1.5" PointX="0.75" PointY="0.75" />
+        <EntityTypeShape EntityType="BandProjectModel.tReply" Width="1.5" PointX="0.75" PointY="9.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
