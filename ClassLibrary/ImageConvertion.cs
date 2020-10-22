@@ -31,10 +31,5 @@ namespace ClassLibrary
                 }
             }
         }
-
-        public static byte[] ImageToByte()
-        {
-            return null;
-        }
     }
 }

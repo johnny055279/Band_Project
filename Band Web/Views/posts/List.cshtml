@@ -8,70 +8,51 @@
         string error = Json.Encode(TempData["Error"]);
         <script>alert(error)</script>
     }
+    if (TempData["SaveError"] != null)
+    {
+        string error = Json.Encode(TempData["SaveError"]);
+        <script>alert(error)</script>
+    }
+    if (TempData["ImageError"] != null)
+    {
+        string error = Json.Encode(TempData["ImageError"]);
+        <script>alert(error)</script>
+    }
 }
 
 @section Styles{
     <link href="~/Content/CSS/post.css" rel="stylesheet" />
 }
 @section Scripts{
+    <script src="~/Content/Scripts/post.js"></script>
+    <script src="https://cdn.ckeditor.com/ckeditor5/23.0.0/classic/ckeditor.js"></script>
 }
 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#PostModal">Create</button>
-<article class="blog-card spring-fever">
-    <img src="https://unsplash.it/600/800?image=1061" />
-    <div class="title-content">
-        <h3><a href="#">10 inspiring photos</a></h3>
-        <div class="intro"> <a href="#">Inspiration</a> </div>
+
+<section>
+    <div class="container">
+        <div class="content">
+            <div class="content-img">
+                <img src="https://images.unsplash.com/photo-1504364269860-8be73aabdff2?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1068&q=80" alt="Body Building">
+            </div>
+            <div class="content-text">
+                <h2 class="content-title">The Strength within</h2>
+                <h4 class="content-subtitle">Unleash your inner beast</h4>
+                <p class="content-paragraph">Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur esse aut deleniti magni. Quaerat unde non beatae hic veniam necessitatibus reiciendis reprehenderit tempore alias maxime delectus, ullam aut adipisci, aliquid velit dolores molestiae, eius nihil nam et ut fugiat iste perspiciatis quis? Veniam accusantium ut recusandae eaque quas laudantium nostrum?</p>
+                <a href="#" class="btn">View More</a>
+                <a href="#" class="like" id="like"><i class="fas fa-thumbs-up"></i><span class="tooltiptext">loading...</span>12</a>
+            </div>
+        </div>
     </div>
-    <div class="card-info">
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim...
-        <a href="#">Read Article<span class="licon icon-arr icon-black"></span></a>
-    </div>
-    <div class="utility-info">
-        <ul class="utility-list">
-            <li><span class="licon icon-like"></span><a href="#">2</a></li>
-            <li><span class="licon icon-com"></span><a href="#">12</a></li>
-            <li><span class="licon icon-dat"></span>03 jun 2017</li>
-            <li><span class="licon icon-tag"></span><a href="#">Photos</a>, <a href="#">Nice</a></li>
-        </ul>
-    </div>
-    <div class="gradient-overlay"></div>
-    <div class="color-overlay"></div>
-</article>
+</section>
 
 @foreach (var item in Model)
 {
-    <article class="blog-card spring-fever">
-        <img src="@item.PostBackGroundImage_base64" />
-        <div class="title-content">
-            <h3><a href="#">@item.PostTitle</a></h3>
-            <div class="intro"><a href="#">@item.PostTitle</a></div>
-        </div>
-        <div class="card-info">
-            @item.PostContent.Substring(0, 200) ...
-            <a href="#">Read Article<span class="licon icon-arr icon-black"></span></a>
-        </div>
-        <div class="utility-info">
-            <ul class="utility-list">
-                <li><i class="far fa-thumbs-up"><a href="#">@item.PostLikeCount</a></i></li>
-                <li><i class="far fa-thumbs-down"><a href="#">@item.PostLikeCount</a></i></li>
-                <li><i class="far fa-comments"><a href="#">@item.PostReplyCount</a></i></li>
-                <li><i class="far fa-calendar-alt">@item.LastEditDate.ToShortDateString()</i></li>
-                <li>
-                    <i class="far fa-tags"></i><a href="#">Photos</a>, <a href="#">Nice</a>
-                </li>
-                @if (item.PostUserId == 1 && Session[Band_Web.Models.SessionDictionary.User_Account].ToString() == "johnnyUserAccount")
-                {
-                    <li><i class="far fa-edit"><a href="#">Edit</a></i></li>
-                }
-            </ul>
-        </div>
-        <div class="gradient-overlay"></div>
-        <div class="color-overlay"></div>
-    </article>
+
 }
 
 <div class="modal fade" id="PostModal">
-    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">Create Post</h5>
@@ -80,18 +61,26 @@
                 </button>
             </div>
             <div class="modal-body">
+                <div ></div>
                 <form enctype="multipart/form-data" action="/posts/create">
+                    @Html.AntiForgeryToken()
                     <div class="form-group">
                         <label for="recipient-name" class="col-form-label">Title:</label>
                         <input type="text" class="form-control" id="recipient-name" name="PostTitle">
                     </div>
                     <div class="form-group">
                         <label for="message-text" class="col-form-label">Content:</label>
-                        <textarea class="form-control" id="message-text" name="PostContent"></textarea>
+                        <textarea id="editor" class="form-control" name="PostContent"></textarea>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group" style="width:40%">
                         <label for="message-text" class="col-form-label">Tags:</label>
-                        <input type="text" class="form-control" id="tag-text" name="PostTag"/>
+                        <select class="form-control" id="tag-text" name="PostTag">
+                            <option disabled>Select</option>
+                        </select>
+                    </div>
+                    <div class="custom-file" style="width:40%">
+                        <input type="file" class="custom-file-input" id="customFile">
+                        <label class="custom-file-label" for="customFile">Choose file</label>
                     </div>
                 </form>
             </div>

@@ -30,6 +30,7 @@
                 <li class="list-group-item list-group-item-dark">Venue: @Model.tticketDetail.TicketVenue</li>
             </ul>
             <form method="post" enctype="multipart/form-data" action="/tour/TicketPurchase">
+                @Html.AntiForgeryToken();
                 <label>Account</label><input class="form-control" type="text" required name="Account" value="@Model.tUser.UserAccount" />
                 <label>Email</label><input class="form-control" type="text" required name="Email" value="@Model.tUser.UserEmail" />
                 <label>Quantity</label><input class="form-control" type="number" required max="4" min="1" value="1" name="Quantity" />

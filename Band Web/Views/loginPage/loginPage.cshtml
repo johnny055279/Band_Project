@@ -16,6 +16,7 @@
         <span class="close-btn"> &#10006 </span>
 
         <form method="post" action="/loginPage/loginPage" enctype="multipart/form-data">
+            @Html.AntiForgeryToken()
             <input type="text" name="UserAccount" placeholder="Account">
             <input type="password" name="UserPassword" placeholder="Password">
             <div class="btn-div">

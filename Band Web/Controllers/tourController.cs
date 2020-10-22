@@ -60,6 +60,7 @@ namespace Band_Web.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult TicketPurchase(TicketPurchaseViewModel model)
         {
             int errorValue;

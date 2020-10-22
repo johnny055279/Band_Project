@@ -21,6 +21,7 @@ namespace Band_Web.Models
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult loginPage(LoginModel loginModel)
         {
             int returnResult;

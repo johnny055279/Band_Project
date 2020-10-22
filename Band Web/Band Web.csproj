@@ -158,6 +158,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\CSS\bootstrap.min.css" />
+    <Content Include="Content\CSS\error.css" />
     <Content Include="Content\CSS\homepage.css" />
     <Content Include="Content\CSS\login.css" />
     <Content Include="Content\CSS\post.css" />
@@ -178,6 +179,7 @@
     <Content Include="Content\Scripts\facebookAuth.js" />
     <Content Include="Content\Scripts\jquery-3.5.1.min.js" />
     <Content Include="Content\Scripts\login.js" />
+    <Content Include="Content\Scripts\post.js" />
     <Content Include="Content\Scripts\signUp.js" />
     <Content Include="Content\Scripts\sweetalert2.all.min.js" />
     <Content Include="Content\Scripts\tour.js" />
@@ -298,6 +300,7 @@
     <Content Include="Views\tour\ConfirmPurchase.cshtml" />
     <Content Include="Views\user\UserEdit.cshtml" />
     <Content Include="Views\posts\List.cshtml" />
+    <Content Include="Views\Shared\Error.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
