@@ -24,8 +24,8 @@
     <link href="~/Content/CSS/post.css" rel="stylesheet" />
 }
 @section Scripts{
+    <script src="~/Content/ckeditor5/build/ckeditor.js"></script>
     <script src="~/Content/Scripts/post.js"></script>
-    <script src="https://cdn.ckeditor.com/ckeditor5/23.0.0/classic/ckeditor.js"></script>
 }
 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#PostModal">Create</button>
 
@@ -61,7 +61,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <div ></div>
+                <div></div>
                 <form enctype="multipart/form-data" action="/posts/create">
                     @Html.AntiForgeryToken()
                     <div class="form-group">
