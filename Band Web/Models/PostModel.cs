@@ -10,7 +10,6 @@ namespace Band_Web.Models
     public class PostModel
     {
         public int PostId { get; set; }
-        public string PostTitle { get; set; }
         public string PostContent { get; set; }
         public int PostLikeCount { get; set; }
         public int PostDislikeCount { get; set; }

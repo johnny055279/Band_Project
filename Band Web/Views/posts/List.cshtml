@@ -3,6 +3,7 @@
 @{
     ViewBag.Title = "List";
     Layout = "~/Views/Layout/_Layout.cshtml";
+    int count = 0;
     if (TempData["Error"] != null)
     {
         string error = Json.Encode(TempData["Error"]);
@@ -40,6 +41,8 @@
                 <h4 class="content-subtitle">Unleash your inner beast</h4>
                 <p class="content-paragraph">Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur esse aut deleniti magni. Quaerat unde non beatae hic veniam necessitatibus reiciendis reprehenderit tempore alias maxime delectus, ullam aut adipisci, aliquid velit dolores molestiae, eius nihil nam et ut fugiat iste perspiciatis quis? Veniam accusantium ut recusandae eaque quas laudantium nostrum?</p>
                 <a href="#" class="btn">View More</a>
+                <a href="#" class="like" id="reply"><i class="far fa-comment-dots"></i><span class="tooltiptext">loading...</span>8</a>
+                <font class="like">&emsp;</font>
                 <a href="#" class="like" id="like"><i class="fas fa-thumbs-up"></i><span class="tooltiptext">loading...</span>12</a>
             </div>
         </div>
@@ -48,7 +51,24 @@
 
 @foreach (var item in Model)
 {
+    <section>
+        <div class="container">
+            <div class="content">
+                <div class="content-img">
+                    <img src="@item.PostMainImage_Path" alt="Body Building">
+                </div>
+                <div class="content-text">
+                    @item.PostContent
+                    <a href="#" class="btn">View More</a>
+                    <a href="#" class="like" id="reply_@count"><i class="far fa-comment-dots"></i><span class="tooltiptext">loading...</span>@item.PostReplyCount</a>
+                    <font class="like">&emsp;</font>
+                    <a href="#" class="like" id="like_@count"><i class="fas fa-thumbs-up"></i><span class="tooltiptext">loading...</span>@item.PostLikeCount</a>
 
+                </div>
+            </div>
+        </div>
+    </section>
+    count++;
 }
 
 <div class="modal fade" id="PostModal">
@@ -65,11 +85,6 @@
                 <form enctype="multipart/form-data" action="/posts/create">
                     @Html.AntiForgeryToken()
                     <div class="form-group">
-                        <label for="recipient-name" class="col-form-label">Title:</label>
-                        <input type="text" class="form-control" id="recipient-name" name="PostTitle">
-                    </div>
-                    <div class="form-group">
-                        <label for="message-text" class="col-form-label">Content:</label>
                         <textarea id="editor" class="form-control" name="PostContent"></textarea>
                     </div>
                     <div class="form-group" style="width:20%">
