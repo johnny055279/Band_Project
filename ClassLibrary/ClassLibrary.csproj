@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Imgur.API" Version="5.0.0" />
     <PackageReference Include="StackExchange.Redis" Version="2.1.58" />
   </ItemGroup>
 

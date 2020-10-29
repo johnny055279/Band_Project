@@ -1,86 +1,69 @@
-﻿class UploadAdapter {
-    constructor(loader) {
-        this.loader = loader;
-    }
+﻿ClassicEditor
+    .create(document.querySelector('#editor'), {
+        placeholder: 'Please Type Here...',
+        simpleUpload: {
+            // The URL that the images are uploaded to.
+            uploadUrl: '/posts/UploadImage',
 
-    upload() {
-        return new Promise((resolve, reject) => {
-            const reader = this.reader = new window.FileReader();
-            reader.addEventListener('load', () => { resolve({ default: reader.result }); })
-            reader.addEventListener('error', error => { reject(error); });
-            reader.addEventListener('abort', () => { reject(); });
-            this.loader.file.then(file => { reader.readAsDataURL(file); });
-        });
-    }
+            // Enable the XMLHttpRequest.withCredentials property.
+            withCredentials: true,
 
-    abort() {
-        this.reader.abort();
-    }
-}
-
-function AdapterPlugin(editor) {
-    editor.plugins.get('FileRepository').createUploadAdapter = (loader) => { return new UploadAdapter(loader) };
-}
-
-ClassicEditor.create(
-    document.querySelector('#editor'),
-    {
-        extraPlugins: [AdapterPlugin],
-		toolbar: {
-			items: [
-				'heading',
-				'|',
-				'bold',
-				'italic',
-				'link',
-				'bulletedList',
-				'numberedList',
-				'|',
-				'indent',
-				'outdent',
-				'|',
-				'imageUpload',
-				'imageInsert',
-				'mediaEmbed',
-				'|',
-				'insertTable',
-				'blockQuote',
-				'undo',
-				'redo',
-				'|',
-				'fontColor',
-				'fontSize',
-				'fontFamily',
-				'|',
-				'highlight',
-				'CKFinder'
-			]
-		},
-		language: 'en',
-		image: {
-			toolbar: [
-				'imageTextAlternative',
-				'imageStyle:full',
-				'imageStyle:side'
-			]
-		},
-		table: {
-			contentToolbar: [
-				'tableColumn',
-				'tableRow',
-				'mergeTableCells',
-				'tableCellProperties'
-			]
-		},
-		licenseKey: '',
-
-	})
-	.then(editor => {
-		window.editor = editor;
-    }
-).catch(error => {
-	console.error('Oops, something went wrong!');
-	console.error('Please, report the following error on https://github.com/ckeditor/ckeditor5/issues with the build id and the error stack trace:');
-	console.warn('Build id: 3gr4xvjhkhnk-scbtj9keuojb');
-	console.error(error);
-});
+            // Headers sent along with the XMLHttpRequest to the upload server.
+            headers: {
+                'X-CSRF-TOKEN': 'CSRF-Token',
+                Authorization: 'Bearer <JSON Web Token>'
+            }
+        },
+        toolbar: {
+            items: [
+                'heading',
+                'bold',
+                'italic',
+                'link',
+                'bulletedList',
+                'numberedList',
+                '|',
+                'indent',
+                'outdent',
+                '|',
+                'fontColor',
+                'fontFamily',
+                'fontSize',
+                'fontBackgroundColor',
+                '|',
+                'imageUpload',
+                'mediaEmbed',
+                'insertTable',
+                'blockQuote',
+                'undo',
+                'redo'
+            ]
+        },
+        language: 'en',
+        image: {
+            toolbar: [
+                'imageStyle:full',
+                'imageStyle:side',
+                '|',
+                'imageTextAlternative'
+            ],
+        },
+        table: {
+            contentToolbar: [
+                'tableColumn',
+                'tableRow',
+                'mergeTableCells',
+                'tableCellProperties',
+                'tableProperties'
+            ]
+        },
+        licenseKey: '',
+    })
+    .then(editor => {
+        window.editor = editor;
+    })
+    .catch(error => {
+        console.error('Oops, something went wrong!');
+        console.error('Please, report the following error on https://github.com/ckeditor/ckeditor5/issues with the build id and the error stack trace:');
+        console.error(error);
+    });

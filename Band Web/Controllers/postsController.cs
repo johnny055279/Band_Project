@@ -13,6 +13,9 @@ using ClassLibrary;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
+using Imgur.API.Authentication;
+using System.Net.Http;
+using Imgur.API.Endpoints;
 
 namespace Band_Web.Controllers
 {
@@ -46,26 +49,28 @@ namespace Band_Web.Controllers
             try
             {
                 int errorValue = 0;
+                string filetime = DateTime.Now.ToString("yyyyMMddhhmmssfff");
+                string imagePath = Server.MapPath("~/Content/Images/PostsImage/" + filetime + postModel.PostMainImage.FileName);
+
                 using (IDbConnection db = new SqlConnection(ConfigurationManager.ConnectionStrings["BandProject"].ConnectionString))
                 {
+                    DynamicParameters parameters = new DynamicParameters();
                     for (int i = 0; i < postModel.PostTag.Length; i++)
                     {
-                        DynamicParameters parameters = new DynamicParameters();
-                        parameters.Add("@PostTitle", postModel.PostTitle, DbType.String, ParameterDirection.Input);
+                        parameters.Add("@PostTag", postModel.PostTag[i], DbType.String, ParameterDirection.Input);
                         parameters.Add("@PostContent", postModel.PostContent, DbType.String, ParameterDirection.Input);
                         parameters.Add("@PostLikeCount", postModel.PostLikeCount, DbType.Int32, ParameterDirection.Input);
                         parameters.Add("@PostDislikeCount", postModel.PostDislikeCount, DbType.Int32, ParameterDirection.Input);
                         parameters.Add("@PostReplyCount", postModel.PostReplyCount, DbType.Int32, ParameterDirection.Input);
                         parameters.Add("@PostUserId", postModel.PostUserId, DbType.Int32, ParameterDirection.Input);
-                        parameters.Add("@PostTag", postModel.PostTag[i], DbType.String, ParameterDirection.Input);
-                        parameters.Add("@PostBackGroundImage", ImageToByte(postModel.PostBackGroundImage_post_back, ImageFormat.Png), DbType.Binary, ParameterDirection.Input);
-                        parameters.Add("@PostContentImage", postModel.PostContentImage_post_back, DbType.Binary, ParameterDirection.Input);
+                        parameters.Add("@PostMainImage_Path", imagePath, DbType.String, ParameterDirection.Input);
                         parameters.Add("@LastEditDate", DateTime.Now, DbType.DateTime, ParameterDirection.Input);
                         parameters.Add("@RETRUN_VALUE", dbType: DbType.Int32, direction: ParameterDirection.ReturnValue);
                         db.Execute("CreatePostProcedure", parameters, commandType: CommandType.StoredProcedure);
                         errorValue = parameters.Get<int>("@RETRUN_VALUE");
                     }
                 }
+
                 return RedirectToAction("List");
             }
             catch
@@ -75,32 +80,18 @@ namespace Band_Web.Controllers
             }
         }
 
-        private byte[] ImageToByte(Image image, ImageFormat imageFormat)
+        [HttpPost]
+        public JsonResult UploadImage(HttpPostedFileBase upload)
         {
-            try
+            string imageUrl = "";
+            string filetime = DateTime.Now.ToString("yyyyMMddhhmmssfff");
+            if (upload != null && upload.ContentLength > 0)
             {
-                byte[] data = null;
-                if (image == null)
-                {
-                    return null;
-                }
-                using (MemoryStream memoryStream = new MemoryStream())
-                {
-                    using (Bitmap bitmap = new Bitmap(image))
-                    {
-                        bitmap.Save(memoryStream, imageFormat);
-                        data = new byte[memoryStream.Length];
-                        memoryStream.Read(data, 0, (int)memoryStream.Length);
-                        memoryStream.Flush();
-                    }
-                }
-                return data;
+                upload.SaveAs(Server.MapPath("~/Content/Images/PostsImage/" + filetime + upload.FileName));
+
+                imageUrl = Url.Content("~/Content/Images/PostsImage/" + filetime + upload.FileName);
             }
-            catch
-            {
-                TempData["ImageError"] = "Image Convert Error...";
-                return null;
-            }
+            return Json(new { uploaded = "true", url = imageUrl });
         }
     }
 }

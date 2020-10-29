@@ -161,7 +161,7 @@
 }
 
 .ck-editor__editable {
-    min-height: 300px;
+    min-height: 40px;
 }
 
 .modal-lg {

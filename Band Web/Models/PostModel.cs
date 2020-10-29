@@ -17,17 +17,8 @@ namespace Band_Web.Models
         public int PostReplyCount { get; set; }
         public int PostUserId { get; set; }
         public string[] PostTag { get; set; }
-
-        public byte[] PostBackGroundImage { get; set; }
-
-        public string PostBackGroundImage_base64
-        {
-            get => ImageConvertion.ByteToImage(PostBackGroundImage);
-        }
-
-        public string PostContentImage { get; set; }
+        public HttpPostedFileBase PostMainImage { get; set; }
+        public string PostMainImage_Path { get; set; }
         public DateTime LastEditDate { get; set; }
-        public Image PostBackGroundImage_post_back { get; set; }
-        public Image PostContentImage_post_back { get; set; }
     }
 }
