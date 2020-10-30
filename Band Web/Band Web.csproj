@@ -338,6 +338,9 @@
       <DependentUpon>BandProjectModel.edmx</DependentUpon>
     </Compile>
     <Compile Include="Controllers\loginPageController.cs" />
+    <Compile Include="Models\GetPostsProcedure_Result.cs">
+      <DependentUpon>BandProjectModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\LoginModel.cs" />
     <Compile Include="Models\PostModel.cs" />
     <Compile Include="Models\SessionDictionary.cs" />
@@ -361,6 +364,15 @@
     <Compile Include="Models\tPost.cs">
       <DependentUpon>BandProjectModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\tPostReply.cs">
+      <DependentUpon>BandProjectModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\tPostTag.cs">
+      <DependentUpon>BandProjectModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\tPostUserLike.cs">
+      <DependentUpon>BandProjectModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\tProduct.cs">
       <DependentUpon>BandProjectModel.tt</DependentUpon>
     </Compile>
@@ -368,9 +380,6 @@
       <DependentUpon>BandProjectModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\tProductType.cs">
-      <DependentUpon>BandProjectModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\tReply.cs">
       <DependentUpon>BandProjectModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\tShipStatus.cs">

@@ -28,7 +28,7 @@
     <script src="~/Content/ckeditor5/build/ckeditor.js"></script>
     <script src="~/Content/Scripts/post.js"></script>
 }
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#PostModal">Create</button>
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#PostModal" id="create">Create</button>
 
 <section>
     <div class="container">
@@ -36,10 +36,13 @@
             <div class="content-img">
                 <img src="https://images.unsplash.com/photo-1504364269860-8be73aabdff2?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1068&q=80" alt="Body Building">
             </div>
+
             <div class="content-text">
+                <span style="color:gray;font-size:0.2em;">posted by MCR on Aug 18, 2020 05:15pm</span>
                 <h2 class="content-title">The Strength within</h2>
                 <h4 class="content-subtitle">Unleash your inner beast</h4>
                 <p class="content-paragraph">Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur esse aut deleniti magni. Quaerat unde non beatae hic veniam necessitatibus reiciendis reprehenderit tempore alias maxime delectus, ullam aut adipisci, aliquid velit dolores molestiae, eius nihil nam et ut fugiat iste perspiciatis quis? Veniam accusantium ut recusandae eaque quas laudantium nostrum?</p>
+                <span><a href="#" style="font-size:0.2em;">#Uncle Jimmy</a>&ensp;<a href="#" style="font-size:0.2em;">#U.S.</a></span>
                 <a href="#" class="btn">View More</a>
                 <a href="#" class="like" id="reply"><i class="far fa-comment-dots"></i><span class="tooltiptext">loading...</span>8</a>
                 <font class="like">&emsp;</font>
@@ -58,12 +61,12 @@
                     <img src="@item.PostMainImage_Path" alt="Body Building">
                 </div>
                 <div class="content-text">
+                    <span style="color:gray;font-size:0.2em;">posted by @item.PostUserId on @item.LastEditDate</span>
                     @item.PostContent
                     <a href="#" class="btn">View More</a>
-                    <a href="#" class="like" id="reply_@count"><i class="far fa-comment-dots"></i><span class="tooltiptext">loading...</span>@item.PostReplyCount</a>
+                    <a href="#" class="like" id="reply_@count"><i class="far fa-comment-dots"></i><span class="tooltiptext">loading...</span></a>
                     <font class="like">&emsp;</font>
-                    <a href="#" class="like" id="like_@count"><i class="fas fa-thumbs-up"></i><span class="tooltiptext">loading...</span>@item.PostLikeCount</a>
-
+                    <a href="#" class="like" id="like_@count"><i class="fas fa-thumbs-up"></i><span class="tooltiptext">loading...</span></a>
                 </div>
             </div>
         </div>
@@ -87,15 +90,9 @@
                     <div class="form-group">
                         <textarea id="editor" class="form-control" name="PostContent"></textarea>
                     </div>
-                    <div class="form-group" style="width:20%">
-                        <label for="message-text" class="col-form-label">Tags:</label>
-                        <select class="form-control" id="tag-text" name="PostTag">
-                            <option selected hidden>Select a tag</option>
-                        </select>
-                    </div>
-                    <div class="custom-file" style="width:20%">
+                    <div class="custom-file" style="width:20%;float:left;">
                         <input type="file" class="custom-file-input" id="customFile">
-                        <label class="custom-file-label" for="customFile">Choose file</label>
+                        <label class="custom-file-label" for="customFile">Choose Main Image</label>
                     </div>
                 </form>
             </div>

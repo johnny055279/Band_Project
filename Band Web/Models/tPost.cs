@@ -14,12 +14,23 @@ namespace Band_Web.Models
     
     public partial class tPost
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public tPost()
+        {
+            this.tPostReply = new HashSet<tPostReply>();
+            this.tPostUserLike = new HashSet<tPostUserLike>();
+        }
+    
         public int PostId { get; set; }
         public string PostContent { get; set; }
-        public int PostLikeCount { get; set; }
-        public int PostDislikeCount { get; set; }
-        public int ReplyCount { get; set; }
-        public int UserId { get; set; }
+        public int PostUserId { get; set; }
+        public byte[] PostMainImage_Path { get; set; }
         public System.DateTime LastEditDate { get; set; }
+    
+        public virtual tUser tUser { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<tPostReply> tPostReply { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<tPostUserLike> tPostUserLike { get; set; }
     }
 }

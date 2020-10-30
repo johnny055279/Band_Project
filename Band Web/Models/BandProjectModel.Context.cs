@@ -12,6 +12,8 @@ namespace Band_Web.Models
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
+    using System.Data.Entity.Core.Objects;
+    using System.Linq;
     
     public partial class BandProjectEntities : DbContext
     {
@@ -37,7 +39,167 @@ namespace Band_Web.Models
         public virtual DbSet<tTicketDetail> tTicketDetail { get; set; }
         public virtual DbSet<tTicketPurchase> tTicketPurchase { get; set; }
         public virtual DbSet<tUser> tUser { get; set; }
+        public virtual DbSet<tPostReply> tPostReply { get; set; }
+        public virtual DbSet<tPostUserLike> tPostUserLike { get; set; }
         public virtual DbSet<tPost> tPost { get; set; }
-        public virtual DbSet<tReply> tReply { get; set; }
+    
+        public virtual int CreatePostProcedure(string postContent, Nullable<int> postUserId, string postTag, byte[] postMainImage_Path, Nullable<System.DateTime> lastEditDate)
+        {
+            var postContentParameter = postContent != null ?
+                new ObjectParameter("PostContent", postContent) :
+                new ObjectParameter("PostContent", typeof(string));
+    
+            var postUserIdParameter = postUserId.HasValue ?
+                new ObjectParameter("PostUserId", postUserId) :
+                new ObjectParameter("PostUserId", typeof(int));
+    
+            var postTagParameter = postTag != null ?
+                new ObjectParameter("PostTag", postTag) :
+                new ObjectParameter("PostTag", typeof(string));
+    
+            var postMainImage_PathParameter = postMainImage_Path != null ?
+                new ObjectParameter("PostMainImage_Path", postMainImage_Path) :
+                new ObjectParameter("PostMainImage_Path", typeof(byte[]));
+    
+            var lastEditDateParameter = lastEditDate.HasValue ?
+                new ObjectParameter("LastEditDate", lastEditDate) :
+                new ObjectParameter("LastEditDate", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("CreatePostProcedure", postContentParameter, postUserIdParameter, postTagParameter, postMainImage_PathParameter, lastEditDateParameter);
+        }
+    
+        public virtual ObjectResult<GetPostsProcedure_Result> GetPostsProcedure(Nullable<int> userId)
+        {
+            var userIdParameter = userId.HasValue ?
+                new ObjectParameter("UserId", userId) :
+                new ObjectParameter("UserId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetPostsProcedure_Result>("GetPostsProcedure", userIdParameter);
+        }
+    
+        public virtual int TicketPurchaseProcedure(Nullable<int> userId, Nullable<int> ticketDetailId, Nullable<byte> quantity)
+        {
+            var userIdParameter = userId.HasValue ?
+                new ObjectParameter("UserId", userId) :
+                new ObjectParameter("UserId", typeof(int));
+    
+            var ticketDetailIdParameter = ticketDetailId.HasValue ?
+                new ObjectParameter("TicketDetailId", ticketDetailId) :
+                new ObjectParameter("TicketDetailId", typeof(int));
+    
+            var quantityParameter = quantity.HasValue ?
+                new ObjectParameter("Quantity", quantity) :
+                new ObjectParameter("Quantity", typeof(byte));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("TicketPurchaseProcedure", userIdParameter, ticketDetailIdParameter, quantityParameter);
+        }
+    
+        public virtual int UserEditProcedure(string userAccount, byte[] userPassword, string userEmail, Nullable<System.DateTime> userBirthday, string userCountry, string userAddress, string userPhone, byte[] userSalt, Nullable<System.DateTime> lastEditDate)
+        {
+            var userAccountParameter = userAccount != null ?
+                new ObjectParameter("UserAccount", userAccount) :
+                new ObjectParameter("UserAccount", typeof(string));
+    
+            var userPasswordParameter = userPassword != null ?
+                new ObjectParameter("UserPassword", userPassword) :
+                new ObjectParameter("UserPassword", typeof(byte[]));
+    
+            var userEmailParameter = userEmail != null ?
+                new ObjectParameter("UserEmail", userEmail) :
+                new ObjectParameter("UserEmail", typeof(string));
+    
+            var userBirthdayParameter = userBirthday.HasValue ?
+                new ObjectParameter("UserBirthday", userBirthday) :
+                new ObjectParameter("UserBirthday", typeof(System.DateTime));
+    
+            var userCountryParameter = userCountry != null ?
+                new ObjectParameter("UserCountry", userCountry) :
+                new ObjectParameter("UserCountry", typeof(string));
+    
+            var userAddressParameter = userAddress != null ?
+                new ObjectParameter("UserAddress", userAddress) :
+                new ObjectParameter("UserAddress", typeof(string));
+    
+            var userPhoneParameter = userPhone != null ?
+                new ObjectParameter("UserPhone", userPhone) :
+                new ObjectParameter("UserPhone", typeof(string));
+    
+            var userSaltParameter = userSalt != null ?
+                new ObjectParameter("UserSalt", userSalt) :
+                new ObjectParameter("UserSalt", typeof(byte[]));
+    
+            var lastEditDateParameter = lastEditDate.HasValue ?
+                new ObjectParameter("LastEditDate", lastEditDate) :
+                new ObjectParameter("LastEditDate", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("UserEditProcedure", userAccountParameter, userPasswordParameter, userEmailParameter, userBirthdayParameter, userCountryParameter, userAddressParameter, userPhoneParameter, userSaltParameter, lastEditDateParameter);
+        }
+    
+        public virtual int UserForgetEmailProcedure(string userEmail)
+        {
+            var userEmailParameter = userEmail != null ?
+                new ObjectParameter("UserEmail", userEmail) :
+                new ObjectParameter("UserEmail", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("UserForgetEmailProcedure", userEmailParameter);
+        }
+    
+        public virtual int UserLoginProcedure(string userAccount, byte[] userPassword)
+        {
+            var userAccountParameter = userAccount != null ?
+                new ObjectParameter("UserAccount", userAccount) :
+                new ObjectParameter("UserAccount", typeof(string));
+    
+            var userPasswordParameter = userPassword != null ?
+                new ObjectParameter("UserPassword", userPassword) :
+                new ObjectParameter("UserPassword", typeof(byte[]));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("UserLoginProcedure", userAccountParameter, userPasswordParameter);
+        }
+    
+        public virtual int UserSignUpPrecedure(string userAccount, byte[] userPassword, string userEmail, string userSexual, Nullable<System.DateTime> userBirthday, string userCountry, string userAddress, string userPhone, byte[] userSalt, Nullable<System.DateTime> lastEditDate)
+        {
+            var userAccountParameter = userAccount != null ?
+                new ObjectParameter("UserAccount", userAccount) :
+                new ObjectParameter("UserAccount", typeof(string));
+    
+            var userPasswordParameter = userPassword != null ?
+                new ObjectParameter("UserPassword", userPassword) :
+                new ObjectParameter("UserPassword", typeof(byte[]));
+    
+            var userEmailParameter = userEmail != null ?
+                new ObjectParameter("UserEmail", userEmail) :
+                new ObjectParameter("UserEmail", typeof(string));
+    
+            var userSexualParameter = userSexual != null ?
+                new ObjectParameter("UserSexual", userSexual) :
+                new ObjectParameter("UserSexual", typeof(string));
+    
+            var userBirthdayParameter = userBirthday.HasValue ?
+                new ObjectParameter("UserBirthday", userBirthday) :
+                new ObjectParameter("UserBirthday", typeof(System.DateTime));
+    
+            var userCountryParameter = userCountry != null ?
+                new ObjectParameter("UserCountry", userCountry) :
+                new ObjectParameter("UserCountry", typeof(string));
+    
+            var userAddressParameter = userAddress != null ?
+                new ObjectParameter("UserAddress", userAddress) :
+                new ObjectParameter("UserAddress", typeof(string));
+    
+            var userPhoneParameter = userPhone != null ?
+                new ObjectParameter("UserPhone", userPhone) :
+                new ObjectParameter("UserPhone", typeof(string));
+    
+            var userSaltParameter = userSalt != null ?
+                new ObjectParameter("UserSalt", userSalt) :
+                new ObjectParameter("UserSalt", typeof(byte[]));
+    
+            var lastEditDateParameter = lastEditDate.HasValue ?
+                new ObjectParameter("LastEditDate", lastEditDate) :
+                new ObjectParameter("LastEditDate", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("UserSignUpPrecedure", userAccountParameter, userPasswordParameter, userEmailParameter, userSexualParameter, userBirthdayParameter, userCountryParameter, userAddressParameter, userPhoneParameter, userSaltParameter, lastEditDateParameter);
+        }
     }
 }

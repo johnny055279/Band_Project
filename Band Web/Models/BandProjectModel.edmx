@@ -57,12 +57,31 @@
           <Key>
             <PropertyRef Name="PostId" />
           </Key>
+          <Property Name="PostId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PostContent" Type="nvarchar(max)" />
+          <Property Name="PostUserId" Type="int" Nullable="false" />
+          <Property Name="PostMainImage_Path" Type="varbinary(max)" />
+          <Property Name="LastEditDate" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tPostReply">
+          <Key>
+            <PropertyRef Name="ReplyId" />
+          </Key>
+          <Property Name="ReplyId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="PostId" Type="int" Nullable="false" />
-          <Property Name="PostContent" Type="nvarchar(max)" Nullable="false" />
-          <Property Name="PostLikeCount" Type="int" Nullable="false" />
-          <Property Name="PostDislikeCount" Type="int" Nullable="false" />
-          <Property Name="ReplyCount" Type="int" Nullable="false" />
+          <Property Name="ReplyContent" Type="nvarchar(max)" Nullable="false" />
           <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="LastEditDate" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tPostUserLike">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PostId" Type="int" Nullable="false" />
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="IsLike" Type="bit" />
+          <Property Name="IsDislike" Type="bit" />
           <Property Name="LastEditDate" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityType Name="tProduct">
@@ -92,17 +111,6 @@
           <Property Name="ProductTypeId" Type="tinyint" Nullable="false" />
           <Property Name="ProductType" Type="nvarchar" MaxLength="20" Nullable="false" />
           <Property Name="LastEditDate" Type="date" Nullable="false" />
-        </EntityType>
-        <EntityType Name="tReply">
-          <Key>
-            <PropertyRef Name="ReplyId" />
-          </Key>
-          <Property Name="ReplyId" Type="int" Nullable="false" />
-          <Property Name="PostId" Type="int" Nullable="false" />
-          <Property Name="ReplyContent" Type="nvarchar(max)" Nullable="false" />
-          <Property Name="ReplyLikeCount" Type="int" Nullable="false" />
-          <Property Name="ReplyDislikeCount" Type="int" Nullable="false" />
-          <Property Name="LastEditDate" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityType Name="tShipStatus">
           <Key>
@@ -223,6 +231,66 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_tPost_tUser">
+          <End Role="tUser" Type="Self.tUser" Multiplicity="1" />
+          <End Role="tPost" Type="Self.tPost" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tUser">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="tPost">
+              <PropertyRef Name="PostUserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tPostReply_tPost">
+          <End Role="tPost" Type="Self.tPost" Multiplicity="1" />
+          <End Role="tPostReply" Type="Self.tPostReply" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tPost">
+              <PropertyRef Name="PostId" />
+            </Principal>
+            <Dependent Role="tPostReply">
+              <PropertyRef Name="PostId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tPostReply_tUser">
+          <End Role="tUser" Type="Self.tUser" Multiplicity="1" />
+          <End Role="tPostReply" Type="Self.tPostReply" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tUser">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="tPostReply">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tPostUserLike_tPost">
+          <End Role="tPost" Type="Self.tPost" Multiplicity="1" />
+          <End Role="tPostUserLike" Type="Self.tPostUserLike" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tPost">
+              <PropertyRef Name="PostId" />
+            </Principal>
+            <Dependent Role="tPostUserLike">
+              <PropertyRef Name="PostId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tPostUserLike_tUser">
+          <End Role="tUser" Type="Self.tUser" Multiplicity="1" />
+          <End Role="tPostUserLike" Type="Self.tPostUserLike" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tUser">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="tPostUserLike">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_tProduct_tProductType">
           <End Role="tProductType" Type="Self.tProductType" Multiplicity="1" />
           <End Role="tProduct" Type="Self.tProduct" Multiplicity="*" />
@@ -271,6 +339,51 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="CreatePostProcedure" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="PostContent" Type="nvarchar(max)" Mode="In" />
+          <Parameter Name="PostUserId" Type="int" Mode="In" />
+          <Parameter Name="PostTag" Type="nvarchar(max)" Mode="In" />
+          <Parameter Name="PostMainImage_Path" Type="varbinary(max)" Mode="In" />
+          <Parameter Name="LastEditDate" Type="datetime" Mode="In" />
+        </Function>
+        <Function Name="GetPostsProcedure" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="UserId" Type="int" Mode="In" />
+        </Function>
+        <Function Name="TicketPurchaseProcedure" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="UserId" Type="int" Mode="In" />
+          <Parameter Name="TicketDetailId" Type="int" Mode="In" />
+          <Parameter Name="Quantity" Type="tinyint" Mode="In" />
+        </Function>
+        <Function Name="UserEditProcedure" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="UserAccount" Type="nvarchar" Mode="In" />
+          <Parameter Name="UserPassword" Type="varbinary(max)" Mode="In" />
+          <Parameter Name="UserEmail" Type="nvarchar" Mode="In" />
+          <Parameter Name="UserBirthday" Type="date" Mode="In" />
+          <Parameter Name="UserCountry" Type="nvarchar" Mode="In" />
+          <Parameter Name="UserAddress" Type="nvarchar" Mode="In" />
+          <Parameter Name="UserPhone" Type="nvarchar" Mode="In" />
+          <Parameter Name="UserSalt" Type="varbinary(max)" Mode="In" />
+          <Parameter Name="LastEditDate" Type="date" Mode="In" />
+        </Function>
+        <Function Name="UserForgetEmailProcedure" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="UserEmail" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="UserLoginProcedure" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="UserAccount" Type="nvarchar" Mode="In" />
+          <Parameter Name="UserPassword" Type="varbinary(max)" Mode="In" />
+        </Function>
+        <Function Name="UserSignUpPrecedure" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="UserAccount" Type="nvarchar" Mode="In" />
+          <Parameter Name="UserPassword" Type="varbinary(max)" Mode="In" />
+          <Parameter Name="UserEmail" Type="nvarchar" Mode="In" />
+          <Parameter Name="UserSexual" Type="nvarchar" Mode="In" />
+          <Parameter Name="UserBirthday" Type="date" Mode="In" />
+          <Parameter Name="UserCountry" Type="nvarchar" Mode="In" />
+          <Parameter Name="UserAddress" Type="nvarchar" Mode="In" />
+          <Parameter Name="UserPhone" Type="nvarchar" Mode="In" />
+          <Parameter Name="UserSalt" Type="varbinary(max)" Mode="In" />
+          <Parameter Name="LastEditDate" Type="date" Mode="In" />
+        </Function>
         <EntityContainer Name="BandProjectModelStoreContainer">
           <EntitySet Name="tBandFormat" EntityType="Self.tBandFormat" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tDestination" EntityType="Self.tDestination" Schema="dbo" store:Type="Tables" />
@@ -278,10 +391,11 @@
           <EntitySet Name="tOrder" EntityType="Self.tOrder" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tOrderDetail" EntityType="Self.tOrderDetail" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tPost" EntityType="Self.tPost" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tPostReply" EntityType="Self.tPostReply" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tPostUserLike" EntityType="Self.tPostUserLike" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tProduct" EntityType="Self.tProduct" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tProductDetail" EntityType="Self.tProductDetail" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tProductType" EntityType="Self.tProductType" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="tReply" EntityType="Self.tReply" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tShipStatus" EntityType="Self.tShipStatus" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tTicketDetail" EntityType="Self.tTicketDetail" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tTicketPurchase" EntityType="Self.tTicketPurchase" Schema="dbo" store:Type="Tables" />
@@ -309,6 +423,26 @@
           <AssociationSet Name="FK_tOrderDetail_tShipStatus" Association="Self.FK_tOrderDetail_tShipStatus">
             <End Role="tShipStatus" EntitySet="tShipStatus" />
             <End Role="tOrderDetail" EntitySet="tOrderDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tPost_tUser" Association="Self.FK_tPost_tUser">
+            <End Role="tUser" EntitySet="tUser" />
+            <End Role="tPost" EntitySet="tPost" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tPostReply_tPost" Association="Self.FK_tPostReply_tPost">
+            <End Role="tPost" EntitySet="tPost" />
+            <End Role="tPostReply" EntitySet="tPostReply" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tPostReply_tUser" Association="Self.FK_tPostReply_tUser">
+            <End Role="tUser" EntitySet="tUser" />
+            <End Role="tPostReply" EntitySet="tPostReply" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tPostUserLike_tPost" Association="Self.FK_tPostUserLike_tPost">
+            <End Role="tPost" EntitySet="tPost" />
+            <End Role="tPostUserLike" EntitySet="tPostUserLike" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tPostUserLike_tUser" Association="Self.FK_tPostUserLike_tUser">
+            <End Role="tUser" EntitySet="tUser" />
+            <End Role="tPostUserLike" EntitySet="tPostUserLike" />
           </AssociationSet>
           <AssociationSet Name="FK_tProduct_tProductType" Association="Self.FK_tProduct_tProductType">
             <End Role="tProductType" EntitySet="tProductType" />
@@ -384,8 +518,74 @@
             <End Role="tUser" EntitySet="tUser" />
             <End Role="tTicketPurchase" EntitySet="tTicketPurchase" />
           </AssociationSet>
+          <EntitySet Name="tPostReply" EntityType="BandProjectModel.tPostReply" />
+          <AssociationSet Name="FK_tPostReply_tUser" Association="BandProjectModel.FK_tPostReply_tUser">
+            <End Role="tUser" EntitySet="tUser" />
+            <End Role="tPostReply" EntitySet="tPostReply" />
+          </AssociationSet>
+          <FunctionImport Name="CreatePostProcedure">
+            <Parameter Name="PostContent" Mode="In" Type="String" />
+            <Parameter Name="PostUserId" Mode="In" Type="Int32" />
+            <Parameter Name="PostTag" Mode="In" Type="String" />
+            <Parameter Name="PostMainImage_Path" Mode="In" Type="Binary" />
+            <Parameter Name="LastEditDate" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="GetPostsProcedure" ReturnType="Collection(BandProjectModel.GetPostsProcedure_Result)">
+          <Parameter Name="UserId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="TicketPurchaseProcedure">
+            <Parameter Name="UserId" Mode="In" Type="Int32" />
+            <Parameter Name="TicketDetailId" Mode="In" Type="Int32" />
+            <Parameter Name="Quantity" Mode="In" Type="Byte" />
+          </FunctionImport>
+          <FunctionImport Name="UserEditProcedure">
+            <Parameter Name="UserAccount" Mode="In" Type="String" />
+            <Parameter Name="UserPassword" Mode="In" Type="Binary" />
+            <Parameter Name="UserEmail" Mode="In" Type="String" />
+            <Parameter Name="UserBirthday" Mode="In" Type="DateTime" />
+            <Parameter Name="UserCountry" Mode="In" Type="String" />
+            <Parameter Name="UserAddress" Mode="In" Type="String" />
+            <Parameter Name="UserPhone" Mode="In" Type="String" />
+            <Parameter Name="UserSalt" Mode="In" Type="Binary" />
+            <Parameter Name="LastEditDate" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="UserForgetEmailProcedure">
+          <Parameter Name="UserEmail" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="UserLoginProcedure">
+            <Parameter Name="UserAccount" Mode="In" Type="String" />
+            <Parameter Name="UserPassword" Mode="In" Type="Binary" />
+          </FunctionImport>
+          <FunctionImport Name="UserSignUpPrecedure">
+            <Parameter Name="UserAccount" Mode="In" Type="String" />
+            <Parameter Name="UserPassword" Mode="In" Type="Binary" />
+            <Parameter Name="UserEmail" Mode="In" Type="String" />
+            <Parameter Name="UserSexual" Mode="In" Type="String" />
+            <Parameter Name="UserBirthday" Mode="In" Type="DateTime" />
+            <Parameter Name="UserCountry" Mode="In" Type="String" />
+            <Parameter Name="UserAddress" Mode="In" Type="String" />
+            <Parameter Name="UserPhone" Mode="In" Type="String" />
+            <Parameter Name="UserSalt" Mode="In" Type="Binary" />
+            <Parameter Name="LastEditDate" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <EntitySet Name="tPostUserLike" EntityType="BandProjectModel.tPostUserLike" />
+          <AssociationSet Name="FK_tPostUserLike_tUser" Association="BandProjectModel.FK_tPostUserLike_tUser">
+            <End Role="tUser" EntitySet="tUser" />
+            <End Role="tPostUserLike" EntitySet="tPostUserLike" />
+          </AssociationSet>
           <EntitySet Name="tPost" EntityType="BandProjectModel.tPost" />
-          <EntitySet Name="tReply" EntityType="BandProjectModel.tReply" />
+          <AssociationSet Name="FK_tPost_tUser" Association="BandProjectModel.FK_tPost_tUser">
+            <End Role="tUser" EntitySet="tUser" />
+            <End Role="tPost" EntitySet="tPost" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tPostReply_tPost" Association="BandProjectModel.FK_tPostReply_tPost">
+            <End Role="tPost" EntitySet="tPost" />
+            <End Role="tPostReply" EntitySet="tPostReply" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tPostUserLike_tPost" Association="BandProjectModel.FK_tPostUserLike_tPost">
+            <End Role="tPost" EntitySet="tPost" />
+            <End Role="tPostUserLike" EntitySet="tPostUserLike" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="tBandFormat">
           <Key>
@@ -529,6 +729,9 @@
           <NavigationProperty Name="tTicketPurchase" Relationship="BandProjectModel.FK_tTicketPurchase_tTicketPurchase" FromRole="tUser" ToRole="tTicketPurchase" />
           <Property Name="UserSalt" Type="Binary" Nullable="false" MaxLength="Max" FixedLength="false" />
           <Property Name="Admin" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="tPostReply" Relationship="BandProjectModel.FK_tPostReply_tUser" FromRole="tUser" ToRole="tPostReply" />
+          <NavigationProperty Name="tPostUserLike" Relationship="BandProjectModel.FK_tPostUserLike_tUser" FromRole="tUser" ToRole="tPostUserLike" />
+          <NavigationProperty Name="tPost" Relationship="BandProjectModel.FK_tPost_tUser" FromRole="tUser" ToRole="tPost" />
         </EntityType>
         <Association Name="FK_tMember_tBandFormat">
           <End Type="BandProjectModel.tBandFormat" Role="tBandFormat" Multiplicity="1" />
@@ -650,29 +853,112 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="tPostReply">
+          <Key>
+            <PropertyRef Name="ReplyId" />
+          </Key>
+          <Property Name="ReplyId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PostId" Type="Int32" Nullable="false" />
+          <Property Name="ReplyContent" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="LastEditDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="tUser" Relationship="BandProjectModel.FK_tPostReply_tUser" FromRole="tPostReply" ToRole="tUser" />
+          <NavigationProperty Name="tPost" Relationship="BandProjectModel.FK_tPostReply_tPost" FromRole="tPostReply" ToRole="tPost" />
+        </EntityType>
+        <Association Name="FK_tPostReply_tUser">
+          <End Type="BandProjectModel.tUser" Role="tUser" Multiplicity="1" />
+          <End Type="BandProjectModel.tPostReply" Role="tPostReply" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tUser">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="tPostReply">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <ComplexType Name="GetPostsProcedure_Result">
+          <Property Type="String" Name="PostContent" Nullable="true" />
+          <Property Type="Binary" Name="PostMainImage_Path" Nullable="true" />
+          <Property Type="String" Name="PostTagName" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="ReplyContent" Nullable="true" />
+          <Property Type="Int32" Name="PostReplyCount" Nullable="true" />
+          <Property Type="Int32" Name="PostLikeCount" Nullable="true" />
+        </ComplexType>
+        <EntityType Name="tPostUserLike">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PostId" Type="Int32" Nullable="false" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="IsLike" Type="Boolean" />
+          <Property Name="IsDislike" Type="Boolean" />
+          <Property Name="LastEditDate" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="tUser" Relationship="BandProjectModel.FK_tPostUserLike_tUser" FromRole="tPostUserLike" ToRole="tUser" />
+          <NavigationProperty Name="tPost" Relationship="BandProjectModel.FK_tPostUserLike_tPost" FromRole="tPostUserLike" ToRole="tPost" />
+        </EntityType>
+        <Association Name="FK_tPostUserLike_tUser">
+          <End Type="BandProjectModel.tUser" Role="tUser" Multiplicity="1" />
+          <End Type="BandProjectModel.tPostUserLike" Role="tPostUserLike" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tUser">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="tPostUserLike">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityType Name="tPost">
           <Key>
             <PropertyRef Name="PostId" />
           </Key>
-          <Property Name="PostId" Type="Int32" Nullable="false" />
-          <Property Name="PostContent" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="PostLikeCount" Type="Int32" Nullable="false" />
-          <Property Name="PostDislikeCount" Type="Int32" Nullable="false" />
-          <Property Name="ReplyCount" Type="Int32" Nullable="false" />
-          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="PostId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PostContent" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PostUserId" Type="Int32" Nullable="false" />
+          <Property Name="PostMainImage_Path" Type="Binary" MaxLength="Max" FixedLength="false" />
           <Property Name="LastEditDate" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="tUser" Relationship="BandProjectModel.FK_tPost_tUser" FromRole="tPost" ToRole="tUser" />
+          <NavigationProperty Name="tPostReply" Relationship="BandProjectModel.FK_tPostReply_tPost" FromRole="tPost" ToRole="tPostReply" />
+          <NavigationProperty Name="tPostUserLike" Relationship="BandProjectModel.FK_tPostUserLike_tPost" FromRole="tPost" ToRole="tPostUserLike" />
         </EntityType>
-        <EntityType Name="tReply">
-          <Key>
-            <PropertyRef Name="ReplyId" />
-          </Key>
-          <Property Name="ReplyId" Type="Int32" Nullable="false" />
-          <Property Name="PostId" Type="Int32" Nullable="false" />
-          <Property Name="ReplyContent" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="ReplyLikeCount" Type="Int32" Nullable="false" />
-          <Property Name="ReplyDislikeCount" Type="Int32" Nullable="false" />
-          <Property Name="LastEditDate" Type="DateTime" Nullable="false" Precision="3" />
-        </EntityType>
+        <Association Name="FK_tPost_tUser">
+          <End Type="BandProjectModel.tUser" Role="tUser" Multiplicity="1" />
+          <End Type="BandProjectModel.tPost" Role="tPost" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tUser">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="tPost">
+              <PropertyRef Name="PostUserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tPostReply_tPost">
+          <End Type="BandProjectModel.tPost" Role="tPost" Multiplicity="1" />
+          <End Type="BandProjectModel.tPostReply" Role="tPostReply" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tPost">
+              <PropertyRef Name="PostId" />
+            </Principal>
+            <Dependent Role="tPostReply">
+              <PropertyRef Name="PostId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tPostUserLike_tPost">
+          <End Type="BandProjectModel.tPost" Role="tPost" Multiplicity="1" />
+          <End Type="BandProjectModel.tPostUserLike" Role="tPostUserLike" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tPost">
+              <PropertyRef Name="PostId" />
+            </Principal>
+            <Dependent Role="tPostUserLike">
+              <PropertyRef Name="PostId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -814,28 +1100,55 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="tPostReply">
+            <EntityTypeMapping TypeName="BandProjectModel.tPostReply">
+              <MappingFragment StoreEntitySet="tPostReply">
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="LastEditDate" ColumnName="LastEditDate" />
+                <ScalarProperty Name="ReplyContent" ColumnName="ReplyContent" />
+                <ScalarProperty Name="PostId" ColumnName="PostId" />
+                <ScalarProperty Name="ReplyId" ColumnName="ReplyId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="CreatePostProcedure" FunctionName="BandProjectModel.Store.CreatePostProcedure" />
+          <FunctionImportMapping FunctionImportName="GetPostsProcedure" FunctionName="BandProjectModel.Store.GetPostsProcedure">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="BandProjectModel.GetPostsProcedure_Result">
+                <ScalarProperty Name="PostContent" ColumnName="PostContent" />
+                <ScalarProperty Name="PostMainImage_Path" ColumnName="PostMainImage_Path" />
+                <ScalarProperty Name="PostTagName" ColumnName="PostTagName" />
+                <ScalarProperty Name="ReplyContent" ColumnName="ReplyContent" />
+                <ScalarProperty Name="PostReplyCount" ColumnName="PostReplyCount" />
+                <ScalarProperty Name="PostLikeCount" ColumnName="PostLikeCount" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="TicketPurchaseProcedure" FunctionName="BandProjectModel.Store.TicketPurchaseProcedure" />
+          <FunctionImportMapping FunctionImportName="UserEditProcedure" FunctionName="BandProjectModel.Store.UserEditProcedure" />
+          <FunctionImportMapping FunctionImportName="UserForgetEmailProcedure" FunctionName="BandProjectModel.Store.UserForgetEmailProcedure" />
+          <FunctionImportMapping FunctionImportName="UserLoginProcedure" FunctionName="BandProjectModel.Store.UserLoginProcedure" />
+          <FunctionImportMapping FunctionImportName="UserSignUpPrecedure" FunctionName="BandProjectModel.Store.UserSignUpPrecedure" />
+          <EntitySetMapping Name="tPostUserLike">
+            <EntityTypeMapping TypeName="BandProjectModel.tPostUserLike">
+              <MappingFragment StoreEntitySet="tPostUserLike">
+                <ScalarProperty Name="LastEditDate" ColumnName="LastEditDate" />
+                <ScalarProperty Name="IsDislike" ColumnName="IsDislike" />
+                <ScalarProperty Name="IsLike" ColumnName="IsLike" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="PostId" ColumnName="PostId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="tPost">
             <EntityTypeMapping TypeName="BandProjectModel.tPost">
               <MappingFragment StoreEntitySet="tPost">
                 <ScalarProperty Name="LastEditDate" ColumnName="LastEditDate" />
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
-                <ScalarProperty Name="ReplyCount" ColumnName="ReplyCount" />
-                <ScalarProperty Name="PostDislikeCount" ColumnName="PostDislikeCount" />
-                <ScalarProperty Name="PostLikeCount" ColumnName="PostLikeCount" />
+                <ScalarProperty Name="PostMainImage_Path" ColumnName="PostMainImage_Path" />
+                <ScalarProperty Name="PostUserId" ColumnName="PostUserId" />
                 <ScalarProperty Name="PostContent" ColumnName="PostContent" />
                 <ScalarProperty Name="PostId" ColumnName="PostId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="tReply">
-            <EntityTypeMapping TypeName="BandProjectModel.tReply">
-              <MappingFragment StoreEntitySet="tReply">
-                <ScalarProperty Name="LastEditDate" ColumnName="LastEditDate" />
-                <ScalarProperty Name="ReplyDislikeCount" ColumnName="ReplyDislikeCount" />
-                <ScalarProperty Name="ReplyLikeCount" ColumnName="ReplyLikeCount" />
-                <ScalarProperty Name="ReplyContent" ColumnName="ReplyContent" />
-                <ScalarProperty Name="PostId" ColumnName="PostId" />
-                <ScalarProperty Name="ReplyId" ColumnName="ReplyId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

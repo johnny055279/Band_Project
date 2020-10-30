@@ -19,6 +19,9 @@ namespace Band_Web.Models
         {
             this.tOrder = new HashSet<tOrder>();
             this.tTicketPurchase = new HashSet<tTicketPurchase>();
+            this.tPostReply = new HashSet<tPostReply>();
+            this.tPostUserLike = new HashSet<tPostUserLike>();
+            this.tPost = new HashSet<tPost>();
         }
     
         public int UserId { get; set; }
@@ -38,5 +41,11 @@ namespace Band_Web.Models
         public virtual ICollection<tOrder> tOrder { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<tTicketPurchase> tTicketPurchase { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<tPostReply> tPostReply { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<tPostUserLike> tPostUserLike { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<tPost> tPost { get; set; }
     }
 }

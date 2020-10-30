@@ -55,20 +55,14 @@ namespace Band_Web.Controllers
                 using (IDbConnection db = new SqlConnection(ConfigurationManager.ConnectionStrings["BandProject"].ConnectionString))
                 {
                     DynamicParameters parameters = new DynamicParameters();
-                    for (int i = 0; i < postModel.PostTag.Length; i++)
-                    {
-                        parameters.Add("@PostTag", postModel.PostTag[i], DbType.String, ParameterDirection.Input);
-                        parameters.Add("@PostContent", postModel.PostContent, DbType.String, ParameterDirection.Input);
-                        parameters.Add("@PostLikeCount", postModel.PostLikeCount, DbType.Int32, ParameterDirection.Input);
-                        parameters.Add("@PostDislikeCount", postModel.PostDislikeCount, DbType.Int32, ParameterDirection.Input);
-                        parameters.Add("@PostReplyCount", postModel.PostReplyCount, DbType.Int32, ParameterDirection.Input);
-                        parameters.Add("@PostUserId", postModel.PostUserId, DbType.Int32, ParameterDirection.Input);
-                        parameters.Add("@PostMainImage_Path", imagePath, DbType.String, ParameterDirection.Input);
-                        parameters.Add("@LastEditDate", DateTime.Now, DbType.DateTime, ParameterDirection.Input);
-                        parameters.Add("@RETRUN_VALUE", dbType: DbType.Int32, direction: ParameterDirection.ReturnValue);
-                        db.Execute("CreatePostProcedure", parameters, commandType: CommandType.StoredProcedure);
-                        errorValue = parameters.Get<int>("@RETRUN_VALUE");
-                    }
+
+                    parameters.Add("@PostContent", postModel.PostContent, DbType.String, ParameterDirection.Input);
+                    parameters.Add("@PostUserId", postModel.PostUserId, DbType.Int32, ParameterDirection.Input);
+                    parameters.Add("@PostMainImage_Path", imagePath, DbType.String, ParameterDirection.Input);
+                    parameters.Add("@LastEditDate", DateTime.Now, DbType.DateTime, ParameterDirection.Input);
+                    parameters.Add("@RETRUN_VALUE", dbType: DbType.Int32, direction: ParameterDirection.ReturnValue);
+                    db.Execute("CreatePostProcedure", parameters, commandType: CommandType.StoredProcedure);
+                    errorValue = parameters.Get<int>("@RETRUN_VALUE");
                 }
 
                 return RedirectToAction("List");

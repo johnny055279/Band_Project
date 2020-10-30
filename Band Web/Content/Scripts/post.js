@@ -1,4 +1,6 @@
-﻿ClassicEditor
+﻿//-------------------------------CKeditor5--------------------------------------
+
+ClassicEditor
     .create(document.querySelector('#editor'), {
         placeholder: 'Please Type Here...',
         simpleUpload: {
@@ -67,3 +69,5 @@
         console.error('Please, report the following error on https://github.com/ckeditor/ckeditor5/issues with the build id and the error stack trace:');
         console.error(error);
     });
+
+//-------------------------------Common js--------------------------------------

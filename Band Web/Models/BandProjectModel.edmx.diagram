@@ -12,7 +12,7 @@
         <EntityTypeShape EntityType="BandProjectModel.tOrderDetail" Width="1.5" PointX="7.5" PointY="6.25" />
         <EntityTypeShape EntityType="BandProjectModel.tProduct" Width="1.5" PointX="3" PointY="6.625" />
         <EntityTypeShape EntityType="BandProjectModel.tProductDetail" Width="1.5" PointX="5.25" PointY="9.875" />
-        <EntityTypeShape EntityType="BandProjectModel.tProductType" Width="1.5" PointX="0.75" PointY="6.875" />
+        <EntityTypeShape EntityType="BandProjectModel.tProductType" Width="1.5" PointX="0.75" PointY="7.25" />
         <EntityTypeShape EntityType="BandProjectModel.tShipStatus" Width="1.5" PointX="5.25" PointY="13.25" />
         <EntityTypeShape EntityType="BandProjectModel.tTicketDetail" Width="1.5" PointX="7.75" PointY="0.75" />
         <EntityTypeShape EntityType="BandProjectModel.tTicketPurchase" Width="1.5" PointX="5.25" PointY="0.75" />
@@ -27,8 +27,14 @@
         <AssociationConnector Association="BandProjectModel.FK_tProductDetail_tProduct" />
         <AssociationConnector Association="BandProjectModel.FK_tTicketPurchase_tTicketDetail" />
         <AssociationConnector Association="BandProjectModel.FK_tTicketPurchase_tTicketPurchase" />
-        <EntityTypeShape EntityType="BandProjectModel.tPost" Width="1.5" PointX="0.75" PointY="0.75" />
-        <EntityTypeShape EntityType="BandProjectModel.tReply" Width="1.5" PointX="0.75" PointY="9.75" />
+        <EntityTypeShape EntityType="BandProjectModel.tPostReply" Width="1.5" PointX="3" PointY="10.625" />
+        <AssociationConnector Association="BandProjectModel.FK_tPostReply_tUser" />
+        <EntityTypeShape EntityType="BandProjectModel.tPostUserLike" Width="1.5" PointX="14.875" PointY="1.625" />
+        <AssociationConnector Association="BandProjectModel.FK_tPostUserLike_tUser" />
+        <EntityTypeShape EntityType="BandProjectModel.tPost" Width="1.5" PointX="5.375" PointY="16.625" />
+        <AssociationConnector Association="BandProjectModel.FK_tPost_tUser" />
+        <AssociationConnector Association="BandProjectModel.FK_tPostReply_tPost" />
+        <AssociationConnector Association="BandProjectModel.FK_tPostUserLike_tPost" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

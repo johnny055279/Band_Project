@@ -12,13 +12,15 @@ namespace Band_Web.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class tReply
+    public partial class tPostReply
     {
         public int ReplyId { get; set; }
         public int PostId { get; set; }
         public string ReplyContent { get; set; }
-        public int ReplyLikeCount { get; set; }
-        public int ReplyDislikeCount { get; set; }
         public System.DateTime LastEditDate { get; set; }
+        public int UserId { get; set; }
+    
+        public virtual tUser tUser { get; set; }
+        public virtual tPost tPost { get; set; }
     }
 }
