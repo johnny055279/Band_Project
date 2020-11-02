@@ -52,7 +52,8 @@ namespace Band_Web.Controllers
             {
                 int errorValue = 0;
                 string filetime = DateTime.Now.ToString("yyyyMMddhhmmssfff");
-                string imagePath = Server.MapPath("~/Content/Images/PostsImage/" + filetime + PostMainImage.FileName);
+                string imagePath = "/Content/Images/PostsImage/" + filetime + PostMainImage.FileName;
+                PostMainImage.SaveAs(Server.MapPath("~/Content/Images/PostsImage/" + filetime + PostMainImage.FileName));
 
                 //Encoding the PostContent to avoid sql attack
                 string PostContentEncode = HttpUtility.HtmlEncode(PostContent);

@@ -31,27 +31,6 @@
 }
 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#PostModal" id="create">Create</button>
 
-<section>
-    <div class="container">
-        <div class="content">
-            <div class="content-img">
-                <img src="https://images.unsplash.com/photo-1504364269860-8be73aabdff2?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1068&q=80" alt="Body Building">
-            </div>
-
-            <div class="content-text">
-                <span style="color:gray;font-size:0.2em;">posted by MCR on Aug 18, 2020 05:15pm</span>
-                <h2 class="content-title">The Strength within</h2>
-                <h4 class="content-subtitle">Unleash your inner beast</h4>
-                <p class="content-paragraph">Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur esse aut deleniti magni. Quaerat unde non beatae hic veniam necessitatibus reiciendis reprehenderit tempore alias maxime delectus, ullam aut adipisci, aliquid velit dolores molestiae, eius nihil nam et ut fugiat iste perspiciatis quis? Veniam accusantium ut recusandae eaque quas laudantium nostrum?</p>
-                <a href="#" class="btn">View More</a>
-                <a href="#" class="like" id="reply"><i class="far fa-comment-dots"></i><span class="tooltiptext">loading...</span>8</a>
-                <font class="like">&emsp;</font>
-                <a href="#" class="like" id="like"><i class="fas fa-thumbs-up"></i><span class="tooltiptext">loading...</span>12</a>
-            </div>
-        </div>
-    </div>
-</section>
-
 @foreach (var item in Model)
 {
     <section>
@@ -60,13 +39,13 @@
                 <div class="content-img">
                     <img src="@item.PostMainImage_Path" alt="Body Building">
                 </div>
-                <div class="content-text">
+                <div class="content-text overflow-auto">
                     <span style="color:gray;font-size:0.2em;">posted by @item.PostUserId on @item.LastEditDate</span>
-                    @item.PostContent_Decode
+                    @Html.Raw(@item.PostContent_Decode)
                     <a href="#" class="btn">View More</a>
-                    <a href="#" class="like" id="reply_@count"><i class="far fa-comment-dots"></i><span class="tooltiptext">loading...</span></a>
+                    <a href="#" class="like" id="reply_@count"><i class="far fa-comment-dots"></i> <span class="tooltiptext">loading...</span>@item.PostReplyCount</a>
                     <font class="like">&emsp;</font>
-                    <a href="#" class="like" id="like_@count"><i class="fas fa-thumbs-up"></i><span class="tooltiptext">loading...</span></a>
+                    <a href="#" class="like" id="like_@count"><i class="fas fa-thumbs-up"></i> <span class="tooltiptext">loading...</span>@item.PostLikeCount</a>
                 </div>
             </div>
         </div>
