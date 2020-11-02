@@ -29,7 +29,7 @@ namespace Band_Web.Controllers
             {
                 using (IDbConnection db = new SqlConnection(ConfigurationManager.ConnectionStrings["BandProject"].ConnectionString))
                 {
-                    string strConnect = @"Select * from tPost order by LastEditDate desc";
+                    string strConnect = @"Execute GetPostsProcedure";
 
                     results = (List<PostModel>)await db.QueryAsync<PostModel>(strConnect);
                 }
@@ -44,25 +44,33 @@ namespace Band_Web.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult create(PostModel postModel)
+        //Enable input with html tag
+        [ValidateInput(false)]
+        public ActionResult create(string PostContent, string PostUserAccount, HttpPostedFileBase PostMainImage)
         {
             try
             {
                 int errorValue = 0;
                 string filetime = DateTime.Now.ToString("yyyyMMddhhmmssfff");
-                string imagePath = Server.MapPath("~/Content/Images/PostsImage/" + filetime + postModel.PostMainImage.FileName);
+                string imagePath = Server.MapPath("~/Content/Images/PostsImage/" + filetime + PostMainImage.FileName);
+
+                //Encoding the PostContent to avoid sql attack
+                string PostContentEncode = HttpUtility.HtmlEncode(PostContent);
 
                 using (IDbConnection db = new SqlConnection(ConfigurationManager.ConnectionStrings["BandProject"].ConnectionString))
                 {
                     DynamicParameters parameters = new DynamicParameters();
 
-                    parameters.Add("@PostContent", postModel.PostContent, DbType.String, ParameterDirection.Input);
-                    parameters.Add("@PostUserId", postModel.PostUserId, DbType.Int32, ParameterDirection.Input);
+                    parameters.Add("@PostContent", PostContentEncode, DbType.String, ParameterDirection.Input);
+                    parameters.Add("@PostUserAccount", PostUserAccount, DbType.String, ParameterDirection.Input);
                     parameters.Add("@PostMainImage_Path", imagePath, DbType.String, ParameterDirection.Input);
-                    parameters.Add("@LastEditDate", DateTime.Now, DbType.DateTime, ParameterDirection.Input);
                     parameters.Add("@RETRUN_VALUE", dbType: DbType.Int32, direction: ParameterDirection.ReturnValue);
                     db.Execute("CreatePostProcedure", parameters, commandType: CommandType.StoredProcedure);
                     errorValue = parameters.Get<int>("@RETRUN_VALUE");
+                    if (errorValue != 1)
+                    {
+                        TempData["SaveError"] = "Something Wrong When Saving...";
+                    }
                 }
 
                 return RedirectToAction("List");

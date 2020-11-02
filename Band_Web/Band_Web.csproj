@@ -367,9 +367,6 @@
     <Compile Include="Models\tPostReply.cs">
       <DependentUpon>BandProjectModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\tPostTag.cs">
-      <DependentUpon>BandProjectModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\tPostUserLike.cs">
       <DependentUpon>BandProjectModel.tt</DependentUpon>
     </Compile>

@@ -66,9 +66,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Band Web\Band Web.csproj">
+    <ProjectReference Include="..\Band Web\Band_Web.csproj">
       <Project>{707B5BDF-D934-4BB3-B279-1B97664967DF}</Project>
-      <Name>Band Web</Name>
+      <Name>Band_Web</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

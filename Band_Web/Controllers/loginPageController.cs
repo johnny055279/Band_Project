@@ -51,13 +51,17 @@ namespace Band_Web.Models
                 }
                 else
                 {
-                    Session[SessionDictionary.User_Account] = loginModel.UserAccount + "UserAccount";
+                    Session[SessionDictionary.User_Account] = loginModel.UserAccount;
 
                     //Redis Db Testing
-                    RedisConnection.Init("127.0.0.1:6379");
-                    ConnectionMultiplexer redisConnectionMultiplexer = RedisConnection.RedisConnectionInstance.ConnectionMultiplexer;
-                    IDatabase redisDb = redisConnectionMultiplexer.GetDatabase();
-                    redisDb.StringSet(loginModel.UserAccount + "UserAccount", loginModel.UserAccount);
+                    try
+                    {
+                        RedisConnection.Init("127.0.0.1:6379");
+                        ConnectionMultiplexer redisConnectionMultiplexer = RedisConnection.RedisConnectionInstance.ConnectionMultiplexer;
+                        IDatabase redisDb = redisConnectionMultiplexer.GetDatabase();
+                        redisDb.StringSet(loginModel.UserAccount + "UserAccount", loginModel.UserAccount);
+                    }
+                    catch { }
 
                     return RedirectToAction("HomePage", "homePage");
                 }
