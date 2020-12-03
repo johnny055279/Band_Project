@@ -16,10 +16,17 @@
     width: 420px;
     height: 420px;
     object-fit: cover;
+    
+    transition: 0.5s;
+}
+
+.content-img img:hover {
+    transform: scale(1.2);
 }
 
 .content-img {
     flex: 1;
+    overflow: hidden;
 }
 
 .content-text .content-title {
@@ -50,12 +57,13 @@
     padding: 2rem;
 }
 
-.like{
-    float:right;
-    transition:0.6s;
+.like, .reply, .space{
+    float: right;
+    transition: 0.6s;
 }
-.like:hover{
-    text-decoration:none;
+
+.like:hover, .reply:hover {
+    text-decoration: none;
 }
 
 @media screen and (max-width: 1100px) {
@@ -125,6 +133,16 @@
     border-color: #555 transparent transparent transparent;
 }
 
+.reply .tooltiptext::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: #555 transparent transparent transparent;
+}
 /* Tooltip text */
 .like .tooltiptext {
     visibility: hidden;
@@ -145,20 +163,46 @@
     transition: opacity 0.3s;
 }
 
+.reply .tooltiptext {
+    visibility: hidden;
+    width: 120px;
+    background-color: #555;
+    color: #fff;
+    text-align: center;
+    padding: 3px 0;
+    border-radius: 6px;
+    /* Position the tooltip text */
+    position: absolute;
+    z-index: 1;
+    bottom: 125%;
+    left: 50%;
+    margin-left: -60px;
+    /* Fade in tooltip */
+    opacity: 0;
+    transition: opacity 0.3s;
+}
 /* Show the tooltip text when you mouse over the tooltip container */
 .like:hover .tooltiptext {
     visibility: visible;
     opacity: 1;
 }
 
+.reply:hover .tooltiptext {
+    visibility: visible;
+    opacity: 1;
+}
 /* Tooltip container */
 .like {
     position: relative;
     display: inline-block;
 }
+.reply {
+    position: relative;
+    display: inline-block;
+}
 
-#editor{
-    height:300px;
+#editor {
+    height: 300px;
 }
 
 .ck-editor__editable {
@@ -169,9 +213,7 @@
     max-width: 80% !important;
 }
 
-.image img{
-    width:626px;
-    overflow:hidden;
+.image img {
+    width: 626px;
+    overflow: hidden;
 }
-
-    

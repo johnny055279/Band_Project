@@ -3,8 +3,6 @@
 @{
     ViewBag.Title = "List";
     Layout = "~/Views/Layout/_Layout.cshtml";
-    int count = 0;
-    string UserAccount = Session[Band_Web.Models.SessionDictionary.User_Account].ToString();
     if (TempData["Error"] != null)
     {
         string error = Json.Encode(TempData["Error"]);
@@ -18,6 +16,11 @@
     if (TempData["ImageError"] != null)
     {
         string error = Json.Encode(TempData["ImageError"]);
+        <script>alert(error)</script>
+    }
+    if (TempData["NotLogin"] != null)
+    {
+        string error = Json.Encode(TempData["NotLogin"]);
         <script>alert(error)</script>
     }
 }
@@ -40,17 +43,16 @@
                     <img src="@item.PostMainImage_Path" alt="Body Building">
                 </div>
                 <div class="content-text overflow-auto">
-                    <span style="color:gray;font-size:0.2em;">posted by @item.PostUserId on @item.LastEditDate</span>
+                    <span style="color:gray;font-size:0.2em;">posted by @item.PostUserAccount on @item.LastEditDate</span>
                     @Html.Raw(@item.PostContent_Decode)
                     <a href="#" class="btn">View More</a>
-                    <a href="#" class="like" id="reply_@count"><i class="far fa-comment-dots"></i> <span class="tooltiptext">loading...</span>@item.PostReplyCount</a>
-                    <font class="like">&emsp;</font>
-                    <a href="#" class="like" id="like_@count"><i class="fas fa-thumbs-up"></i> <span class="tooltiptext">loading...</span>@item.PostLikeCount</a>
+                    <a href="#" class="reply" id="R_@item.PostId"><i class="far fa-comment-dots"></i> <span class="tooltiptext" id="reply_tooltiptext">loading...</span>@item.PostReplyCount</a>
+                    <font class="space">&emsp;</font>
+                    <a href="#" class="like" id="L_@item.PostId" data-cancel="0"><i class="fas fa-thumbs-up"></i> <span class="tooltiptext" id="like_tooltiptext">loading...</span>@item.PostLikeCount</a>
                 </div>
             </div>
         </div>
     </section>
-    count++;
 }
 
 <div class="modal fade" id="PostModal">
@@ -73,7 +75,6 @@
                         <input type="file" class="custom-file-input" id="customFile" name="PostMainImage">
                         <label class="custom-file-label" for="customFile">Choose Main Image</label>
                     </div>
-                    <input type="hidden" value="@UserAccount" name="PostUserAccount" />
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                         <button type="submit" class="btn btn-primary">POST</button>

@@ -6,6 +6,7 @@ namespace Band_Web.Models
     public class PostModel
     {
         public int PostId { get; set; }
+        public string PostUserAccount { get; set; }
         public string PostContent { get; set; }
         public string PostContent_Decode { get { return HttpUtility.HtmlDecode(this.PostContent); } }
         public int PostUserId { get; set; }

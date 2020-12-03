@@ -16,6 +16,9 @@ using System.IO;
 using Imgur.API.Authentication;
 using System.Net.Http;
 using Imgur.API.Endpoints;
+using System.Data.Entity.Infrastructure;
+using StackExchange.Redis;
+using System.Web.UI;
 
 namespace Band_Web.Controllers
 {
@@ -33,6 +36,17 @@ namespace Band_Web.Controllers
 
                     results = (List<PostModel>)await db.QueryAsync<PostModel>(strConnect);
                 }
+
+                //Redis Db Testing
+                RedisConnection.Init("127.0.0.1:6379");
+                ConnectionMultiplexer redisConnectionMultiplexer = RedisConnection.RedisConnectionInstance.ConnectionMultiplexer;
+                IDatabase redisDb = redisConnectionMultiplexer.GetDatabase();
+                foreach (var item in results)
+                {
+                    redisDb.StringSet($"Post{item.PostId}LikeCount", item.PostLikeCount);
+                    redisDb.StringSet($"Post{item.PostId}ReplyCount", item.PostReplyCount);
+                }
+
                 return View(results);
             }
             catch (Exception exeption)
@@ -46,7 +60,7 @@ namespace Band_Web.Controllers
         [ValidateAntiForgeryToken]
         //Enable input with html tag
         [ValidateInput(false)]
-        public ActionResult create(string PostContent, string PostUserAccount, HttpPostedFileBase PostMainImage)
+        public ActionResult create(string PostContent, HttpPostedFileBase PostMainImage)
         {
             try
             {
@@ -63,7 +77,7 @@ namespace Band_Web.Controllers
                     DynamicParameters parameters = new DynamicParameters();
 
                     parameters.Add("@PostContent", PostContentEncode, DbType.String, ParameterDirection.Input);
-                    parameters.Add("@PostUserAccount", PostUserAccount, DbType.String, ParameterDirection.Input);
+                    parameters.Add("@PostUserAccount", "MCR", DbType.String, ParameterDirection.Input);
                     parameters.Add("@PostMainImage_Path", imagePath, DbType.String, ParameterDirection.Input);
                     parameters.Add("@RETRUN_VALUE", dbType: DbType.Int32, direction: ParameterDirection.ReturnValue);
                     db.Execute("CreatePostProcedure", parameters, commandType: CommandType.StoredProcedure);
@@ -95,6 +109,77 @@ namespace Band_Web.Controllers
                 imageUrl = Url.Content("~/Content/Images/PostsImage/" + filetime + upload.FileName);
             }
             return Json(new { uploaded = "true", url = imageUrl });
+        }
+
+        [HttpPost]
+        public JsonResult getAccountList(string id, string type)
+        {
+            List<dynamic> likeList = new List<dynamic>();
+            try
+            {
+                using (IDbConnection db = new SqlConnection(ConfigurationManager.ConnectionStrings["BandProject"].ConnectionString))
+                {
+                    DynamicParameters parameters = new DynamicParameters();
+                    parameters.Add("@PostId", int.Parse(id), DbType.Int32, ParameterDirection.Input);
+                    parameters.Add("@Type", type, DbType.String, ParameterDirection.Input);
+                    likeList = db.Query("GetAccountListProcedure", parameters, commandType: CommandType.StoredProcedure).ToList();
+                }
+                return Json(likeList);
+            }
+            catch (Exception ex)
+            {
+                return Json(new { Error = ex.ToString() });
+            }
+        }
+
+        [HttpPost]
+        public JsonResult userAction(string id, int cancel)
+        {
+            string RETURNVALUE = "ERROR";
+            RedisConnection.Init("127.0.0.1:6379");
+            ConnectionMultiplexer redisConnectionMultiplexer = RedisConnection.RedisConnectionInstance.ConnectionMultiplexer;
+            if (Session[SessionDictionary.User_Account] == null)
+            {
+                return Json(new { Error = "Please Login!" });
+            }
+            else
+            {
+                try
+                {
+                    //Redis Db Testing
+                    if (cancel == 1)
+                    {
+                        IDatabase redisDb = redisConnectionMultiplexer.GetDatabase();
+                        redisDb.StringIncrement($"Post{id}LikeCount", 1, StackExchange.Redis.CommandFlags.FireAndForget);
+                        return Json("");
+                    }
+                    else
+                    {
+                        IDatabase redisDb = redisConnectionMultiplexer.GetDatabase();
+                        redisDb.StringDecrement($"Post{id}LikeCount", 1, StackExchange.Redis.CommandFlags.FireAndForget);
+                        return Json("");
+                    }
+
+                    using (IDbConnection db = new SqlConnection(ConfigurationManager.ConnectionStrings["BandProject"].ConnectionString))
+                    {
+                        DynamicParameters parameters = new DynamicParameters();
+                        parameters.Add("", int.Parse(id), DbType.Int32, ParameterDirection.Input);
+                        parameters.Add("", cancel, DbType.Int32, ParameterDirection.Input);
+                        parameters.Add("@RETURN_VALUE", dbType: DbType.Int32, direction: ParameterDirection.ReturnValue);
+                        db.Execute("PostUserActionProcedure", parameters, commandType: CommandType.StoredProcedure);
+                        RETURNVALUE = parameters.Get<string>("@RETURN_VALUE");
+                    }
+
+                    if (RETURNVALUE == "ERROR")
+                    {
+                        return Json(new { Error = "Something Wrong..." });
+                    }
+                }
+                catch (Exception ex)
+                {
+                    return Json(new { Error = ex.ToString() });
+                }
+            }
         }
     }
 }
